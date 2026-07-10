@@ -1,0 +1,91 @@
+%% Generic Document Processing Reference Architecture
+%% Synthetic open-source example. Not based on a production workflow.
+%%
+%% Suggested repository path:
+%% user-kit/diagram-kit/mermaid/mermaid-example/generic-document-processing-architecture.mmd
+
+flowchart TB
+
+    %% ─────────────────────────────────────────────
+    %% Orchestration flow
+    %% ─────────────────────────────────────────────
+    subgraph ORCH["Orchestration Flow"]
+        direction LR
+
+        RQ["1. Receive Processing Request<br/>Document groups, metadata,<br/>requested fields, and output format"]
+        VR["2. Validate Request Package<br/>Check required inputs and<br/>resolve enabled processing profiles"]
+        DG["3. Dispatch Document Groups<br/>Process each group independently<br/>with bounded concurrency"]
+        CO["4. Collect Group Outcomes<br/>Preserve success and failure states<br/>with per-group context"]
+        RS["5. Return Normalized Response<br/>Merge outcomes into a stable<br/>response contract"]
+
+        RQ --> VR --> DG --> CO --> RS
+    end
+
+    %% ─────────────────────────────────────────────
+    %% Single-group processing flow
+    %% ─────────────────────────────────────────────
+    subgraph GROUP["Single-Group Processing Flow"]
+        direction TB
+
+        subgraph PREP["Preparation and Routing"]
+            direction LR
+
+            LG["A. Load One Document Group<br/>Resolve the group identifier<br/>and read all source files"]
+            IF["B. Inspect Source Files<br/>Detect supported types and<br/>check size or page limits"]
+            NP["C. Normalize Page Assets<br/>Reuse images or convert documents<br/>into normalized page images"]
+            PT["D. Extract Preview Text<br/>Read a lightweight text sample<br/>for routing hints"]
+            CC["E. Classify Document Context<br/>Infer a document category and<br/>match an available profile"]
+            PA{"F. Matching Profile<br/>Available?"}
+
+            LG --> IF --> NP --> PT --> CC --> PA
+        end
+
+        subgraph EXTRACT["Structured Extraction"]
+            direction RL
+
+            SP["G. Select Extraction Profile<br/>Load profile guidance and<br/>keep only requested fields"]
+            EP["H. Build Extraction Policy<br/>Define objects, arrays, types,<br/>missing values, and constraints"]
+            MR["I. Compose Multimodal Request<br/>Combine field rules, target JSON,<br/>and normalized page images"]
+            SE["J. Run Structured Extraction<br/>Process the complete page set<br/>and return structured JSON"]
+            VO["K. Verify and Normalize Output<br/>Validate the response, parse JSON,<br/>and attach the group identifier"]
+
+            SP --> EP --> MR --> SE --> VO
+        end
+
+        GR["L. Create Standard Group Result<br/>Success: structured document data<br/>Failure: reason with empty data"]
+        UP["Unsupported-Profile Result<br/>Skip extraction and return<br/>a controlled group failure"]
+        EX["Processing Exception<br/>Normalize file, conversion,<br/>or model errors"]
+
+        PA -- "Yes" --> SP
+        PA -- "No" --> UP
+        VO --> GR
+        UP --> GR
+        EX -. "Failure path" .-> GR
+    end
+
+    %% High-level relationship between orchestration
+    %% and one independently processed group.
+    DG -. "For each document group" .-> LG
+    GR -. "Group outcome" .-> CO
+
+    %% ─────────────────────────────────────────────
+    %% Styles
+    %% ─────────────────────────────────────────────
+    classDef intake fill:#E7EDF5,stroke:#355070,color:#182235,stroke-width:2px;
+    classDef process fill:#E5F1F8,stroke:#3A7CA5,color:#182235,stroke-width:2px;
+    classDef decision fill:#FFF0DB,stroke:#D88C2F,color:#182235,stroke-width:2px;
+    classDef success fill:#E4F2EA,stroke:#3A7D5D,color:#182235,stroke-width:2px;
+    classDef failure fill:#F8E5E5,stroke:#B54A4A,color:#182235,stroke-width:2px;
+    classDef result fill:#E7EDF5,stroke:#355070,color:#182235,stroke-width:3px;
+
+    class RQ,LG intake;
+    class VR,DG,CO,IF,NP,SP,EP,MR process;
+    class PT,CC,PA decision;
+    class RS,SE,VO success;
+    class UP,EX failure;
+    class GR result;
+
+    style ORCH fill:#F8FAFC,stroke:#D8DEE9,stroke-width:2px
+    style GROUP fill:#FBFCFE,stroke:#D8DEE9,stroke-width:2px
+    style PREP fill:#FFFFFF,stroke:#D8DEE9,stroke-width:1px
+    style EXTRACT fill:#FFFFFF,stroke:#D8DEE9,stroke-width:1px

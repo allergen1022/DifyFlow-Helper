@@ -1,0 +1,5 @@
+# Reference Flow placeholder / 参考 Flow 占位文件
+# 中文：此文件仅演示参考 Flow 的放置位置，不是当前官方 Dify DSL，也不保证可导入。
+# English: This file only demonstrates where a reference Flow belongs. It is not current official Dify DSL and is not guaranteed to be importable.
+# 中文：请用已脱敏的真实参考 Flow 替换，并在生成完整 YAML 前要求 agent 在线核验当前 Dify 标准。
+# English: Replace it with a sanitized reference Flow and require current Dify web verification before full YAML generation.

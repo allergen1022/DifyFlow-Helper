@@ -1,0 +1,27 @@
+RAW COPY FROM DIFY / 从 Dify 直接复制
+Pre-Notes: 
+1.普通用户可选使用该txt后缀文件作为debug信息的描述，支持直接从Dify日志/运行测试记录侧复制需debug内容
+2.该文件开头flow/node title/node type字段非必填，若填写可帮助agent更好定位及理解
+3.建议将INPUT/OUTPUT分开填写
+
+flow: invoice-check.yml
+node title: Parse Invoice JSON
+node type: code (javascript)
+
+INPUT:
+model_output => some model note first...
+```json
+{"invoice_no":"INV-DEMO-001","file":"<PRIVATE_FILE_URL_REDACTED>"}
+```
+
+OUTPUT:
+
+
+error_msg: SyntaxError: Unexpected token '`', "```json"... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at main (index.js:8:21)
+process exited with exit status 1
+
+recent change / 最近改动: prompt now asks for markdown fenced JSON
+expected / 期望: return object {invoice_data: {...}}
+auth / 授权信息: <REDACTED_TOKEN>

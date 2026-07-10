@@ -1,0 +1,6 @@
+# Minimal Dify Flow reference placeholder / 最小 Dify Flow 参考占位文件
+# 中文：此文件用于说明 reference-flow 的放置方式，不保证可直接导入 Dify。
+# English: This file shows where a reference Flow may be placed. It is not guaranteed to be directly importable into Dify.
+# 中文：请替换为已脱敏的作者/团队参考 Flow；完整 YAML 或可导入性声明前必须在线核验当前 Dify 标准。
+# English: Replace it with a sanitized author/team reference Flow; verify current Dify standards online before full YAML or importability claims.
+# 安全 / Safety: no real keys, tokens, credentials, signed URLs, private links, or production data.
