@@ -1,86 +1,87 @@
-# DifyFlow-Helper-Skill
+<div align="center">
 
-[English](./README.md) | **简体中文**
+**简体中文** · [English](./README.md)
 
-> 一个面向 Dify Flow / Workflow / Chatflow 的 Agent Skill，帮助 Agent 在新建、参考开发、修改、Debug、已有 Flow 分析、LLM Prompt 整理和架构图输出等任务中，先理解材料、分析影响，再根据用户确认执行修改或生成文件。
+# 🧩 DifyFlow Helper
 
-DifyFlow-Helper 不是面向某一种固定角色的工具。普通用户、产品经理、交付人员、开发者和维护人员，都可以直接用自然语言描述目标，也可以把已有的 Flow、报错、节点输入输出、Prompt、分析问题或参考材料交给 Agent。
+**一个面向 Dify Workflow / Chatflow 设计、分析、排错与安全修改的 Agent Skill。**
 
-它希望让 Agent 在处理 Dify Flow 时更加可控、清晰和安全：
+**先分析，再行动 · 先诊断，再修改 · 先确认，再写入**
+<p>
+  <a href="./LICENSE">
+    <img src="https://img.shields.io/github/license/allergen1022/DifyFlow-Helper?style=flat-square&label=LICENSE&labelColor=24292f&color=2f81f7" alt="License">
+  </a>
+  <img src="https://img.shields.io/badge/Codex_CLI-主要支持-2ea44f?style=flat-square&labelColor=1f2328" alt="Codex CLI 主要支持">
+  <img src="https://img.shields.io/badge/Claude_Code-兼容支持-d97757?style=flat-square&labelColor=1f2328" alt="Claude Code 兼容支持">
+  <img src="https://img.shields.io/badge/Dify-Workflow_%26_Chatflow-6c63ff?style=flat-square&labelColor=1f2328" alt="Dify Workflow 和 Chatflow">
+  <img src="https://img.shields.io/badge/Python-可选-3776ab?style=flat-square&labelColor=1f2328" alt="Python 可选">
+</p>
 
-- **先分析，再行动**：先判断任务场景、读取相关材料，按需解释已有 Flow 逻辑并给出方案，不盲目生成或改写文件。
-- **先诊断，再修改**：出现节点失败、输出异常或运行报错时，Debug 优先于直接修改 Flow。
-- **先确认，再产生副作用**：完整 YAML、修改版 Flow、报告、图表和 Prompt 文件等，均在用户确认后生成。
-- **节点级说明更清楚**：说明节点名称、输入绑定、输出变量、数据格式、下游影响以及 Dify UI 中的设置方式。
-- **接受原始材料**：不强迫用户填写复杂表单；`.md`、`.txt`、`.json`、`.log`、`.yml`、`.yaml`、Dify 面板复制内容和混合报错文本都可以直接使用。
-- **生成内容不污染 Skill**：确认后的文件产物写入用户当前 case / project 的 `generate/`，不会写进已安装的 Skill 或 `user-kit/`。
 
-> **Skill 原则：**让 Agent 成为一个会分析、会追问、会确认、会保护源文件的 Dify Flow 助手，而不是一个无确认地改写 YAML 的脚本。
+[快速开始](#quick-start) · [安装](#installation) · [核心能力](#capabilities) · [安全机制](#safety) · [可选项](#optional) · [限制](#limitations) · [用户材料包](#user-kit)
 
----
-
-## 目录
-
-- [项目定位](#项目定位)
-- [它可以做什么](#它可以做什么)
-- [30 秒快速开始](#30-秒快速开始)
-- [需要准备材料时先看 user-kit](#需要准备材料时先看-user-kit)
-- [仓库内容](#仓库内容)
-- [安装](#安装)
-- [`generate/` 如何产生](#generate-如何产生)
-- [节点级输出能力](#节点级输出能力)
-- [LLM Prompt 与 JSON 输出](#llm-prompt-与-json-输出)
-- [可选辅助脚本](#可选辅助脚本)
-- [安全与确认机制](#安全与确认机制)
-- [这个项目不是什么](#这个项目不是什么)
-- [贡献](#贡献)
-- [License](#license)
+</div>
 
 ---
 
-## 项目定位
+DifyFlow Helper 让 Agent 成为一个可控的 Dify Flow / Workflow / Chatflow 助手，而不是一个未经确认就改写 YAML 的自动化脚本。
 
-DifyFlow-Helper 的核心是 `difyflow-helper/`：一个安装给 Agent 使用的 Skill。
+你可以提供业务需求、已有 Flow、运行报错、节点输入输出、LLM Prompt 或原始调试材料。它会先判断任务类型，只读取相关材料，在节点层面解释影响并提出方案，确认后才创建或修改文件。
 
-它负责指导 Agent 如何处理 Dify Flow / Workflow / Chatflow 的设计、参考开发、修改、Debug、只读 Flow 分析、节点输入输出、代码节点、LLM Prompt、插件或授权风险，以及用户明确提出的逻辑图或架构图任务。
+```text
+需求 / Flow / 报错 / Prompt / 原始材料
+                    │
+                    ▼
+            DifyFlow Helper
+                    │
+       ┌────────────┼────────────┐
+       ▼            ▼            ▼
+     分析逻辑      定位问题      设计方案
+       │            │            │
+       └────────────┼────────────┘
+                    ▼
+              解释影响与方案
+                    ▼
+                用户确认
+                    ▼
+      YAML · 代码 · Prompt · 报告 · 图表
+```
 
-项目同时提供可选的 `user-kit/`，帮助用户准备需求、Flow、报错、Prompt 和绘图材料。`user-kit/` 不是 Skill，也不需要安装。
+> [!IMPORTANT]
+> 只安装 [`difyflow-helper/`](./difyflow-helper/) 目录作为 Agent Skill。仓库根目录和 [`user-kit/`](./user-kit/) 都不是 Skill 根目录。
 
-你不需要先判断自己属于“产品”“交付”还是“开发”角色。只要正在处理 Dify Flow，就可以直接描述目标并提供手头已有的材料。
-
-典型使用者包括：
-
-- 从零设计 Dify Flow 的普通用户；
-- 希望基于旧 Flow 或相似场景复用逻辑的产品或交付人员；
-- 需要修改节点、Prompt、代码或变量绑定的开发者；
-- 正在排查节点失败、输出异常、JSON 解析失败或插件调用失败的维护人员；
-- 想理解、评审、对比或沉淀一个或多个已有 Flow 且暂时不修改文件的用户；
-- 需要把 Flow 整理成 Mermaid、SVG、HTML、Word / PPT 可用图的团队成员。
-
----
+<a id="capabilities"></a>
 
 ## 它可以做什么
 
-DifyFlow-Helper 覆盖六类主要场景。用户不需要记住场景编号，也不需要预先选择角色；Agent 会根据自然语言和已有材料判断任务类型。
+DifyFlow Helper 覆盖六类主要场景。你不需要预先选择角色，也不需要记住场景编号；Agent 会根据需求和已有材料自动判断任务类型。
 
-| 场景 | 适合什么需求 | Agent 如何处理 |
+| 场景 | 适合什么需求 | 默认处理方式 |
 |---|---|---|
-| **1. 从零设计新 Flow** | 有业务目标，但没有现成 Flow 或可复用逻辑 | 先澄清或推断目标，询问是否需要总体节点框架，说明节点职责、输入输出、风险和建议；只有用户确认后，才考虑生成完整可导入 YAML |
-| **2. 参考已有 Flow 开发** | 有旧 Flow、相似场景或可复用逻辑，希望开发新 Flow | 读取用户指定的参考材料，判断哪些逻辑可以复用、哪些必须调整，再由用户选择需要总体框架、局部节点、代码、Prompt 还是完整 YAML |
-| **3. 修改已有 Flow** | 需要修改已有 Flow 的节点、代码、变量绑定、Prompt 或输出结构 | 定位目标节点，追踪上游输入与下游消费者；默认先给修改方案，直接编辑或生成修改版文件前再次确认 |
-| **4. 排查 Flow 报错** | Flow 跑不起来、节点失败、输出异常、`JSON.parse`、`error_msg`、插件或工具调用失败 | **先诊断，后修改**。聚焦失败 Flow、失败节点、报错信息、实际输入输出、预期输出和最近改动；定位原因后再询问是否修复或生成报告 |
-| **5. 绘制逻辑或架构图** | 明确需要 Mermaid、JavaScript、SVG、HTML、图片或 Word / PPT 可用图 | 仅在用户明确提出绘图时启用；先确认用途、细节层级、实现方式和风格，再生成对应内容或文件 |
-| **6. 分析一个或多个已有 Flow** | 想理解、评审、对比、追踪或文档化已有 Flow 逻辑，但暂时不修改它 | 未指定重点时做全局分析；也可重点分析 Code 节点、LLM Prompt、条件判断、迭代、循环、变量绑定、工具、插件、嵌套 Flow 或跨 Flow 输入输出契约。默认先在聊天中输出，用户要求或确认后才生成 Markdown 分析报告 |
+| **从零设计新 Flow** | 有业务目标，但没有现成 Flow | 先澄清目标，设计节点框架，说明职责、输入输出、风险与建议，再考虑是否需要完整 YAML。 |
+| **参考已有 Flow 开发** | 有旧 Flow、相似场景或可复用逻辑 | 区分可复用结构与必须调整的业务部分，再由你选择需要总体框架、局部节点、代码、Prompt 或完整 Flow。 |
+| **修改已有 Flow** | 需要调整节点、代码、变量绑定、Prompt 或输出字段 | 定位目标节点，追踪上游输入和下游消费者，默认先给修改方案，再写文件。 |
+| **排查 Flow 报错** | 节点失败、输出异常、JSON 解析失败、插件或工具调用失败 | 先诊断，后修改；优先分析失败节点、实际证据、预期行为和最近改动。 |
+| **绘制逻辑或架构图** | 明确需要 Mermaid、SVG、HTML、JavaScript、图片或 Word/PPT 可用图 | 先确认用途、细节层级、输出格式、实现方式和视觉风格，再生成。 |
+| **分析已有 Flow** | 想理解、评审、对比、追踪或文档化一个或多个 Flow，但不修改 | 支持全局分析、重点分析和多 Flow 分析；默认在聊天中输出，Markdown 报告为可选项。 |
 
-LLM 节点 Prompt 是跨场景的节点级能力，不是额外的主场景。它贯穿新建、参考开发、修改、Debug 和只读 Flow 分析。详情见 [LLM Prompt 与 JSON 输出](#llm-prompt-与-json-输出)。
+LLM Prompt 是贯穿设计、参考开发、修改、Debug 和只读 Flow 分析的节点级能力，不是额外的主场景。
 
----
+### 可直接使用的材料
+
+```text
+.md  .txt  .json  .log  .yml  .yaml
+```
+
+有效 JSON 有帮助，但不是前提。Dify 面板复制内容、部分 JSON、无效 JSON-like 文本、Stack Trace、空输出加报错、模型输入输出、插件返回值和自然语言需求都可以直接使用。
+
+<a id="quick-start"></a>
 
 ## 30 秒快速开始
 
-### 1. 准备你已经有的材料
+### 1. 只准备你已经有的材料
 
-用户 case 可以非常简单，不需要创建固定 workspace：
+一个 case 文件夹可以非常简单：
 
 ```text
 case/
@@ -88,175 +89,96 @@ case/
 └── debug.txt
 ```
 
-也可以不创建任何文件，直接在聊天中粘贴需求、Flow 内容、节点输入输出、Prompt 或报错文本。
+也可以不创建文件，直接把需求、Flow 内容、节点输入输出、Prompt 或报错文本粘贴到聊天中。项目不要求固定 workspace 结构。
 
-支持的常见材料类型：
-
-```text
-.md  .txt  .json  .log  .yml  .yaml
-```
-
-有效 JSON 有帮助，但不是前提。Dify 面板复制内容、部分 JSON、无效 JSON-like 文本、Stack Trace、空输出加报错信息都可以直接提供。
-
-### 2. 用一句话告诉 Agent 每份材料的用途
-
-仅仅需要指明具体路径。
-
-Debug：
+### 2. 用一句话说明每份材料的用途
 
 ```text
-请把 ./flow.yml 作为源 Flow，./debug.txt 作为报错材料。先诊断“解析发票 JSON”节点为什么失败，不要直接修改源文件。
+请把 ./flow.yml 作为源 Flow，./debug.txt 作为报错材料。
+先诊断“解析发票 JSON”节点为什么失败，不要直接修改源文件。
 ```
 
-修改已有 Flow：
+### 3. 只确认当前真正需要的交付物
 
-```text
-请分析 ./flow.yml 中“供应商风险判断”节点的上下游影响。我要调整输出字段，先给修改方案，不要直接写文件。
-```
+Agent 可能会提供以下选项：
 
-从零设计：
-
-```text
-我想做一个供应商材料审核 Flow。先帮我设计整体节点框架、关键输入输出和风险，暂时不要生成完整 YAML。
-```
-
-参考开发：
-
-```text
-请参考 ./reference-flow.yml 的节点结构，并根据 ./request.md 的新业务字段重新设计。先说明哪些逻辑可以复用，哪些不能复用。
-```
-
-Flow 分析：
-
-```text
-请分析 ./main-flow.yml 和 ./related-tool-flow.yml，说明整体执行路径，并重点看 Code 节点、LLM Prompt、条件判断和跨 Flow 输入输出契约。不要修改任何文件。分析完成后再问我要不要生成 Markdown 报告。
-```
-
-整理 LLM Prompt：
-
-```text
-请根据 ./llm-prompt-material.md 整理这个 LLM 节点的 system prompt 和 user prompt，并说明变量应该从哪些节点绑定。
-```
-
-绘图：
-
-```text
-请根据 ./flow.yml 画一张适合放进 PPT 的节点级逻辑图。先确认图的层级和输出格式，再生成文件。
-```
-
-### 3. 根据分析确认真正需要的交付物
-
-Agent 可能会询问你需要：
-
-- 只在聊天中查看总体框架或修改建议；
-- 节点级输入输出与绑定表；
-- 完整 Code 节点代码；
+- 聊天中的分析结论或修改建议；
+- 节点级输入、输出和绑定表；
+- Code 节点的完整替换代码；
 - 完整或局部 LLM Prompt；
 - 修改后的 Flow 副本；
-- Debug 报告；
-- Flow 分析报告；
-- Mermaid、SVG、HTML 或其他图形文件；
+- Debug 报告或 Flow 分析报告；
+- Mermaid、SVG、HTML 或其他图表格式；
 - 完整可导入 YAML。
 
-你只需确认当前真正需要的内容，不需要一次生成全部交付物。
+不需要一次生成全部内容。
 
----
+<details>
+<summary><strong>更多可直接复制的示例提示词</strong></summary>
 
-## 需要准备材料时先看 `user-kit`
-
-`user-kit/` 是可选的用户材料包，**不是 Agent Skill，不需要安装**。
-
-当你不知道应该向 Agent 提供什么材料时，建议先阅读：
-
-- 中文说明：[`user-kit/README_CN.md`](./user-kit/README_CN.md)
-- English guide: [`user-kit/README.md`](./user-kit/README.md)
-- 按场景快速准备材料：[`user-kit/quick-start.md`](./user-kit/quick-start.md)
-
-`user-kit/` 提供轻量模板、已填写示例、参考 Flow 说明和绘图风格参考。你可以只复制其中一个需要的文件到自己的 case，也可以完全不使用模板，直接在聊天中提供原始材料。
-
-常用入口：
-
-| 你想做什么 | 查看 |
-|---|---|
-| 复制轻量材料模板 | [`user-kit/templates/`](./user-kit/templates/) |
-| 查看已填写的脱敏示例 | [`user-kit/examples/`](./user-kit/examples/) |
-| Flow 分析模板和示例 | [`user-kit/templates/flow-analysis-request.md`](./user-kit/templates/flow-analysis-request.md), [`user-kit/examples/flow-analysis/request.md`](./user-kit/examples/flow-analysis/request.md) |
-| 维护共享参考 Flow | [`user-kit/reference-flows/`](./user-kit/reference-flows/) |
-| 查看绘图风格和实现参考 | [`user-kit/diagram-kit/`](./user-kit/diagram-kit/) |
-
-私有、客户相关或只属于单个 case 的 Flow、日志和 Prompt 应保留在用户自己的 case / project 中，不应提交到 `user-kit/`。
-
----
-
-## 仓库内容
-
-开源仓库根目录包含以下四项：
+#### 从零设计
 
 ```text
-DifyFlow-Helper/
-├── difyflow-helper/        # 唯一可安装的 Agent Skill
-├── user-kit/               # 可选用户材料包，不安装为 Skill
-├── README.md               # 英文仓库说明
-└── README_CN.md            # 中文仓库说明
+我想做一个供应商材料审核 Flow。
+先帮我设计整体节点框架、关键输入输出和主要风险，
+暂时不要生成完整 YAML。
 ```
 
-其中只有两个功能目录：
-
-| 目录 | 是否安装为 Skill | 作用 |
-|---|---:|---|
-| [`difyflow-helper/`](./difyflow-helper/) | **是** | 真正的 Agent Skill，包含 Skill 入口、场景路由、确认规则、Debug 规则、YAML 安全规则、节点 IO 规则、绘图规则、安全规则、可选脚本和安装说明 |
-| [`user-kit/`](./user-kit/) | **否** | 可选用户材料包，包含轻量模板、脱敏示例、参考 Flow 说明、LLM Prompt 材料和绘图风格参考 |
-
-### `difyflow-helper/`：唯一需要安装的 Skill
+#### 参考开发
 
 ```text
-difyflow-helper/
-├── SKILL.md              # Skill 入口与最高层行为边界
-├── references/           # 场景路由、确认、Debug、YAML、节点 IO、绘图和安全规则
-├── assets/               # Agent 使用的参考材料与可选报告模板
-├── scripts/              # 可选的只读分析与基础 Mermaid 辅助脚本
-└── docs/                 # 安装说明与 Agent 使用指南
+请参考 ./reference-flow.yml 的节点结构，
+并根据 ./request.md 中的新业务字段重新设计。
+先说明哪些逻辑可以复用，哪些不能复用。
 ```
 
-它主要负责：
+#### 修改已有 Flow
 
-- 根据请求自动路由六类场景，报错场景优先进入 Debug；
-- 接受自然语言和不规整的原始材料，不强迫用户填写表单；
-- 将源 `.yml` / `.yaml` 默认视为只读文件；
-- 用节点名称优先定位，节点 ID 作为辅助；
-- 说明节点输入、来源绑定、数据类型、输出变量和下游消费者；
-- 为 Code 节点提供必要的完整替换代码、输入输出、类型保护和依赖说明；
-- 处理 LLM Prompt、变量、Context、JSON 输出和下游解析关系；
-- 分析单个或多个已有 Flow，包括全局分析、重点节点分析和跨 Flow 输入输出契约；
-- 在涉及当前 Dify 标准或不确定行为时进行联网核验；
-- 对密钥、Token、授权头、Cookie、签名 URL 和私有数据采取占位或脱敏策略；
-- 将已确认的文件产物写入用户当前 case，而不是 Skill 安装目录。
+```text
+请分析 ./flow.yml 中“供应商风险判断”节点的上下游影响。
+我要调整它的输出字段，先给修改方案，不要直接写文件。
+```
 
-详细行为规则见 [`difyflow-helper/SKILL.md`](./difyflow-helper/SKILL.md)，Agent 操作说明见 [`difyflow-helper/docs/AGENT_GUIDE.md`](./difyflow-helper/docs/AGENT_GUIDE.md)。
+#### 分析多个 Flow
 
-### `user-kit/`：可选材料包
+```text
+请分析 ./main-flow.yml 和 ./related-tool-flow.yml。
+说明整体执行路径，并重点看 Code 节点、LLM Prompt、条件判断、
+迭代以及跨 Flow 输入输出契约。不要修改文件。
+分析后再问我要不要生成 Markdown 报告。
+```
 
-`user-kit/` 不包含 Agent 的核心行为规则，也不需要安装。它的用途是让普通用户、产品、交付和开发更容易准备需求、Flow、报错、输入输出、Prompt 和绘图材料。
+#### 整理 LLM Prompt
 
-首次使用建议从 [`user-kit/README_CN.md`](./user-kit/README_CN.md) 和 [`user-kit/quick-start.md`](./user-kit/quick-start.md) 开始。
+```text
+请根据 ./llm-prompt-material.md 整理这个 LLM 节点的
+system prompt 和 user prompt，并说明上游变量应该如何绑定。
+```
 
----
+#### 绘图
+
+```text
+请根据 ./flow.yml 画一张适合放进 PowerPoint 的节点级逻辑图。
+先确认细节层级和输出格式，再生成文件。
+```
+
+</details>
+
+<a id="installation"></a>
 
 ## 安装
 
 ### 安装边界
 
-> **只安装 `difyflow-helper/` 目录。不要把仓库根目录或 `user-kit/` 当作 Skill 安装。**
-
 ```text
 DifyFlow-Helper/
-├── difyflow-helper/        # ✅ 作为 Skill 安装
-├── user-kit/               # ❌ 不作为 Skill 安装
+├── difyflow-helper/        # ✅ 只安装这个目录作为 Skill 根目录
+├── user-kit/               # ❌ 可选材料包，不安装为 Skill
 ├── README.md               # ❌ 仓库说明
 └── README_CN.md            # ❌ 仓库说明
 ```
 
-安装成功后，已安装的 Skill 根目录中应当直接包含：
+正确安装后，Skill 根目录应直接包含：
 
 ```text
 SKILL.md
@@ -266,247 +188,274 @@ scripts/
 docs/
 ```
 
-如果安装后还需要再进入一层 `difyflow-helper/` 才能看到 `SKILL.md`，通常说明选错了 Skill 根目录。
+如果还需要再进入一层 `difyflow-helper/` 才能看到 `SKILL.md`，说明选择了错误的 Skill 根目录。
 
-当前兼容目标：
+### 方式 A：让 Agent 帮你安装
 
-- **主要目标：** Codex CLI；
-- **次要目标：** Claude Code；
-- **其他 Agent：** 尽力兼容，但不以牺牲 Codex CLI / Claude Code 的核心可用性为代价。
-
-不同 Agent、CLI、IDE 或版本的 Skill 安装位置和命令可能不同，请以对应产品当前的官方说明为准。
-
-### 方式 A：交给 Agent 安装
-
-可以把仓库地址交给 Agent，并明确告诉它只安装 `difyflow-helper/`。
-
-可直接复制下面的提示词：
+直接复制下面的提示词：
 
 ```text
 请从下面的 GitHub 仓库安装 DifyFlow-Helper：
-
-<在这里粘贴 GitHub 仓库地址>
+https://github.com/allergen1022/DifyFlow-Helper
 
 安装要求：
-1. 只安装仓库中的 difyflow-helper/ 目录，并将它作为 Skill 根目录。
-2. 不要安装仓库根目录 DifyFlow-Helper/。
-3. 不要把 user-kit/ 当作 Skill 安装。
-4. 安装后检查：已安装的 Skill 根目录下应直接包含 SKILL.md、references/、assets/、scripts/ 和 docs/。
-5. 具体安装位置、复制方式或配置方式，请按照你当前环境对应的官方 Skill 安装说明执行。
-6. 完成后告诉我实际安装路径和检查结果。
-```
-
-更短的版本：
-
-```text
-请安装这个仓库中的 difyflow-helper/ 目录作为 Agent Skill。不要安装仓库根目录，也不要安装 user-kit/。安装后确认 SKILL.md 直接位于已安装的 Skill 根目录中，并告诉我安装路径。
+1. 只安装 difyflow-helper/ 目录，并把它作为 Skill 根目录。
+2. 不要安装 DifyFlow-Helper 仓库根目录。
+3. 不要把 user-kit/ 安装为 Skill。
+4. 安装完成后，确认 SKILL.md、references/、assets/、scripts/、docs/
+   直接位于已安装的 Skill 根目录下。
+5. 根据当前 Agent、CLI、IDE 或环境的官方说明选择安装路径和方式。
+6. 完成后报告实际安装路径和检查结果。
 ```
 
 ### 方式 B：手动安装
 
 1. Clone 或下载本仓库。
-2. 查看你当前 Agent、CLI 或 IDE 对 Skill 的安装说明。
-3. 添加或复制 Skill 时，选择仓库中的 `difyflow-helper/` 目录作为 Skill 根目录。
-4. 不要选择仓库根目录 `DifyFlow-Helper/`，也不要选择 `user-kit/`。
-5. 安装后检查：`SKILL.md` 是否直接位于已安装的 Skill 根目录下。
+2. 查看当前 Agent、CLI 或 IDE 的 Skill 安装说明。
+3. 将仓库中的 `difyflow-helper/` 目录添加或复制为 Skill 根目录。
+4. 确认 `SKILL.md` 直接位于安装后的 Skill 根目录。
 
-仓库内的安装边界说明见 [`difyflow-helper/docs/INSTALL.md`](./difyflow-helper/docs/INSTALL.md)。
+更具体的仓库安装边界见 [`difyflow-helper/docs/INSTALL.md`](./difyflow-helper/docs/INSTALL.md)。
 
-### 是否需要 Python 环境？
+### 兼容目标
 
-安装和使用 `difyflow-helper` Skill 本身，**不要求用户提前安装 Python**。
+- **主要支持：**Codex CLI
+- **兼容支持：**Claude Code
+- **其他 Agent：**尽力兼容，但不会牺牲核心安全行为
 
-本项目的 `scripts/` 包含少量可选 Python 辅助脚本，用于只读分析 Flow YAML、提取节点信息、扫描疑似密钥或生成基础 Mermaid 草图。它们是辅助工具，不是 Skill 正常工作的前置条件。
+### 是否需要 Python？
 
-- 只安装和使用 Skill：不需要 Python；
-- 让 Agent 阅读、分析、规划、Debug 或整理 Prompt：不需要 Python；
-- 本地运行 `scripts/*.py`：需要 Python 环境；
-- 运行 YAML 解析脚本时，可能还需要 `PyYAML`。
+不需要。安装和使用 Skill 本身不依赖 Python。
 
-辅助脚本不能绕过 Skill 的安全规则。源 Flow 默认只读，直接修改、覆盖文件或生成完整可导入 YAML 前仍需用户确认。
+只有在本地运行可选辅助脚本时才需要 Python；读取 YAML 的脚本可能还需要 `PyYAML`。辅助脚本不能绕过确认、源文件保护、在线核验或安全规则。
 
----
+## 工作流程
 
-## `generate/` 如何产生
+```text
+用户描述任务或提供原始材料
+              │
+              ▼
+      Agent 判断相关场景
+              │
+              ▼
+    只读取当前任务需要的规则与文件
+              │
+              ▼
+   分析现有逻辑、实际证据和影响范围
+              │
+              ▼
+        说明诊断结论或处理方案
+              │
+              ▼
+       用户确认范围与交付物
+              │
+              ▼
+     安全创建文件或修改源文件副本
+```
 
-`generate/` **不需要用户提前创建，也不是仓库内预置的工作目录**。
+### 核心原则
 
-当用户明确要求或确认文件输出后，Agent 才会在用户当前 case / project 下按需创建 `generate/` 及对应子目录：
+| 原则 | 具体行为 |
+|---|---|
+| **先分析，再行动** | 在生成或改写文件前，先理解需求和已有材料。 |
+| **先诊断，再修改** | 出现报错时，优先基于运行证据定位根因。 |
+| **先确认，再产生副作用** | 完整 YAML、修改文件、报告、Prompt 文件、图表、插件、凭据和 Git 操作等，在适用场景下需要确认。 |
+| **保护源 Flow** | 源 `.yml` / `.yaml` 默认只读，修改版通常写入 `generate/yml/`。 |
+| **节点级解释** | 以节点名称为主要定位方式，说明绑定、变量、类型、数据结构、Dify UI 设置和下游消费者。 |
+| **核验当前行为** | 涉及准确的 Dify DSL、导入导出、插件或 Structured Output 行为时，按需核验当前可靠资料。 |
+| **不编造缺失依赖** | 缺少嵌套 Flow、Tool Flow、插件或输入输出契约时，明确指出缺失，而不是猜测。 |
+| **保护敏感信息** | Key、Token、Cookie、Authorization Header、Credential、签名 URL 和不必要的私有数据使用脱敏或占位符。 |
+
+## 仓库结构
+
+```text
+DifyFlow-Helper/
+├── difyflow-helper/                # 唯一需要安装的 Agent Skill
+│   ├── SKILL.md                    # 入口与顶层行为边界
+│   ├── references/                 # 路由、安全、Debug、I/O、绘图规则
+│   ├── assets/                     # Agent 参考资料与报告模板
+│   ├── scripts/                    # 可选只读辅助脚本
+│   └── docs/                       # 安装与 Agent 使用说明
+├── user-kit/                       # 可选的用户材料准备包
+│   ├── templates/
+│   ├── examples/
+│   ├── reference-flows/
+│   ├── diagram-kit/
+│   ├── quick-start.md
+│   ├── README.md
+│   └── README_CN.md
+├── README.md
+├── README_CN.md
+└── LICENSE
+```
+
+核心行为规则位于 [`difyflow-helper/SKILL.md`](./difyflow-helper/SKILL.md) 和 [`difyflow-helper/references/`](./difyflow-helper/references/)；面向 Agent 的使用说明见 [`difyflow-helper/docs/AGENT_GUIDE.md`](./difyflow-helper/docs/AGENT_GUIDE.md)。
+
+## 生成文件如何保存
+
+用户不需要提前创建 `generate/`。只有明确请求或确认文件输出后，Agent 才会在当前 case / project 下创建它。
 
 ```text
 case/
 ├── flow.yml
 ├── debug.txt
-└── generate/                     # 用户确认文件输出后，由 Agent 按需创建
-    ├── yml/                      # 新生成或修改后的 Flow 文件
-    ├── reports/                  # Debug 报告、分析报告、修改计划
-    ├── prompts/                  # System/User Prompt、JSON 输出说明等
+└── generate/
+    ├── yml/                         # 新建或修改后的 Flow 副本
+    ├── reports/                     # Debug、分析与修改方案报告
+    ├── prompts/                     # Prompt 与 JSON 输出规范
     ├── diagrams/
     │   ├── mermaid/
     │   ├── javascript/
     │   ├── svg/
     │   ├── html/
     │   └── images/
-    └── code/                     # 用户明确要求的独立代码文件
+    └── code/                        # 用户明确要求的独立代码文件
 ```
 
-典型路径：
+示例路径：
 
 ```text
 generate/yml/invoice-check.modified.yml
 generate/reports/invoice-check-debug-report.md
-generate/reports/order-routing-flow-analysis-report.md
 generate/reports/customer-support-multi-flow-analysis-report.md
 generate/prompts/supplier-review-system-prompt.md
-generate/prompts/supplier-review-user-prompt.md
 generate/prompts/supplier-review-json-output-spec.md
 generate/diagrams/mermaid/invoice-check-logic.mmd
 generate/diagrams/html/invoice-check-diagram.html
 generate/code/json-normalizer.js
 ```
 
-Agent 写入或建议写入文件后，应明确告知具体相对路径。生成内容不会写入已安装的 `difyflow-helper/`，也不会写入 `user-kit/`。
-
-如果用户只要求在聊天中输出，则不会创建 `generate/`。
-
----
+生成内容不会写入已安装的 Skill 目录或 `user-kit/`。如果只需要聊天输出，则不会创建 `generate/`。
 
 ## 节点级输出能力
 
-当任务涉及节点设计、修改、Debug 或只读 Flow 分析时，Skill 会在有必要时说明：
+在相关任务中，DifyFlow Helper 可以说明：
 
-| 内容 | 说明 |
+| 范围 | 输出内容 |
 |---|---|
-| 节点定位 | 节点名称优先，节点 ID 作为辅助 |
-| 输入绑定 | Dify 中的参数名、来源节点、来源变量和数据类型 |
-| 输出定义 | 输出变量、数据形态以及下游使用节点 |
-| 操作说明 | 用户应在 Dify UI 中绑定或修改什么 |
-| Code 节点 | 完整替换代码、输入、返回值、空值或类型保护和第三方依赖 |
-| LLM 节点 | System Prompt、User Prompt、变量、Context、JSON 字段和下游解析影响 |
-| 外部依赖 | 插件、API、授权、嵌套 Tool Flow 或缺失 Flow 的依赖说明 |
-| Flow 分析 | 全局 Flow 解释、重点 Code/LLM/条件/迭代分析，以及多 Flow 输入输出契约 |
-
-如果当前 Flow 调用了未提供的嵌套 Flow 或 Tool Flow，Agent 会明确指出缺失依赖，而不会编造其输出结构。
-
----
+| **节点定位** | 以节点名称为主要定位方式，节点 ID 作为辅助参考 |
+| **输入绑定** | Dify 参数名、来源节点、来源变量和数据类型 |
+| **输出定义** | 输出变量、数据结构和下游消费者 |
+| **Dify UI 操作** | 在界面中需要绑定、选择或修改什么 |
+| **Code 节点** | 完整替换代码、输入、返回值、类型/空值保护、依赖与占位符 |
+| **LLM 节点** | System Prompt、User Prompt、变量、Context、JSON 字段、Structured Output 假设和下游解析影响 |
+| **外部依赖** | 插件、API、授权、嵌套 Tool Flow 和缺失的 Flow 依赖 |
+| **Flow 分析** | 全局执行路径、重点节点、条件、循环、迭代和多 Flow 输入输出契约 |
 
 ## LLM Prompt 与 JSON 输出
 
-LLM 节点 Prompt 是 DifyFlow-Helper 的节点级能力之一，而不是单独的主场景。
+Skill 可以帮助：
 
-在新建、参考开发、修改或 Debug 过程中，Skill 可以协助：
+- 拆分和整理 System Prompt 与 User Prompt；
+- 将 Prompt 变量映射到上游节点和输出；
+- 判断 Context 来自检索节点、上游节点还是直接变量；
+- 设计 JSON 字段并说明下游消费者；
+- 排查无效 JSON、字段缺失和下游解析失败；
+- 在不改写的前提下分析现有 Prompt；
+- 当环境不明确时，区分原生 Structured Output / JSON Schema 与仅依靠 Prompt 的 JSON 约束；
+- 经确认后，将 Prompt、输出规范或 JSON Schema 草稿写入 `generate/prompts/`。
 
-- 区分和整理 System Prompt、User Prompt；
-- 说明 Prompt 变量应从哪个节点、哪个变量绑定；
-- 分析 Context 来自检索节点、上游节点还是 Prompt 变量；
-- 设计 JSON 输出字段及下游消费方式；
-- 排查 LLM 输出不是合法 JSON、字段缺失或下游解析失败等问题；
-- 在只读分析中检查已有 LLM Prompt 和变量绑定，不自动改写；
-- 在当前 Dify 环境能力不明确时，区分原生 Structured Output / JSON Schema 与 Prompt-only JSON 约束；
-- 经用户确认后，将较长的 Prompt、Prompt 修改方案、JSON 输出说明或 JSON Schema 草案写入 `generate/prompts/`。
+用户只要求局部修改时，不代表授权替换完整 Prompt。
 
-如果用户只要求局部修改 Prompt，Agent 不应默认替换完整 Prompt；如需完整替换或文件化输出，应先请求确认。
+<a id="user-kit"></a>
 
----
+## 用户材料包 `user-kit`
+
+[`user-kit/`](./user-kit/) 是可选的材料准备包，**不是 Agent Skill，也不需要安装**。
+
+当你不知道该提供什么，或希望使用经过脱敏的示例时，可以从以下入口开始：
+
+| 需求 | 入口 |
+|---|---|
+| 总体说明 | [`user-kit/README.md`](./user-kit/README.md) |
+| 中文说明 | [`user-kit/README_CN.md`](./user-kit/README_CN.md) |
+| 分场景快速开始 | [`user-kit/quick-start.md`](./user-kit/quick-start.md) |
+| 轻量模板 | [`user-kit/templates/`](./user-kit/templates/) |
+| 已填写的脱敏示例 | [`user-kit/examples/`](./user-kit/examples/) |
+| 公共参考 Flow 指引 | [`user-kit/reference-flows/`](./user-kit/reference-flows/) |
+| 图表风格与实现参考 | [`user-kit/diagram-kit/`](./user-kit/diagram-kit/) |
+
+这些模板只是可选起点，不是必须填写的表单。私有业务 Flow、生产日志、凭据、客户数据和私有 Prompt 应保存在你自己的 case 或 project 中。
+
+<a id="optional"></a>
 
 ## 可选辅助脚本
 
-Skill 包含少量 Python 辅助脚本，但核心工作不依赖脚本。这些脚本默认只读，不能绕过确认、安全或联网核验规则。
+Skill 提供少量可选、只读的 Python 辅助脚本：
 
 | 脚本 | 用途 |
 |---|---|
 | `inspect_dify_yaml.py` | 输出 Flow 的高层摘要 |
 | `extract_node_index.py` | 提取节点名称、类型和 ID |
-| `extract_node_io.py` | 提取可能的节点输入输出配置线索 |
-| `scan_secrets.py` | 扫描疑似敏感信息并仅输出脱敏结果 |
-| `generate_mermaid_from_flow.py` | 在明确需要绘图时生成基础 Mermaid |
+| `extract_node_io.py` | 提取潜在的节点输入输出配置线索 |
+| `scan_secrets.py` | 扫描疑似敏感值并仅返回脱敏结果 |
+| `generate_mermaid_from_flow.py` | 在用户明确要求绘图后生成基础 Mermaid 草稿 |
 
-脚本建议使用 Python 3.10+；读取 YAML 的脚本需要 `PyYAML`。具体说明见 [`difyflow-helper/scripts/SCRIPT_INDEX.md`](./difyflow-helper/scripts/SCRIPT_INDEX.md)。
+本地运行脚本建议使用 Python 3.10+；读取 YAML 的脚本需要 `PyYAML`。详情见 [`difyflow-helper/scripts/SCRIPT_INDEX.md`](./difyflow-helper/scripts/SCRIPT_INDEX.md)。
 
----
+<a id="safety"></a>
 
 ## 安全与确认机制
 
-Dify Flow 的生成和修改可能影响源文件、插件、凭据、节点绑定和下游行为。DifyFlow-Helper 将低风险分析与有副作用的执行分开：
+DifyFlow Helper 会区分低风险分析和可能产生副作用的操作。
 
-```text
-用户描述需求或提供材料
-        ↓
-Agent 判断场景，只读取相关内容
-        ↓
-分析问题、补齐必要信息、给出方案或框架
-        ↓
-用户确认需要的交付物和操作范围
-        ↓
-Agent 才生成文件、修改副本或执行其他已确认动作
-```
+### 以下操作通常需要明确确认
 
-以下操作需要用户明确确认：
-
-- 生成完整、可导入的 Dify YAML / YML / DSL；
-- 直接修改源 Flow 或覆盖已有文件；
-- 根据 Debug 结论修改 Flow；
+- 生成完整可导入的 Dify YAML / YML / DSL；
+- 直接修改或覆盖源 Flow；
+- 根据 Debug 结论应用 Flow 修改；
 - 安装或配置插件；
-- 使用真实 API Key、Token、凭据或授权值；
-- 创建本可在聊天中完成的大型文件产物；
-- 创建本可在聊天中完成的 Markdown Flow 分析报告；
-- 执行 Git 操作；
-- 用户只要求局部修改时，替换完整 Prompt；
-- 输出较长 Prompt、JSON 输出规范或 JSON Schema 草案到文件；
-- 选择用户尚未确认的图形输出格式或实现路径。
+- 使用真实 API Key、Token、Credential 或 Authorization 值；
+- 在聊天输出已经足够时创建大型文件产物；
+- 在聊天分析已经足够时创建正式 Flow 分析报告；
+- 用户只要求局部修改时替换完整 Prompt；
+- 将长 Prompt 或 JSON 规范写入文件；
+- 选择用户尚未确认的图表格式或实现方式；
+- 执行 `git add`、`commit`、`push`、`reset`、`checkout`、`rebase`、`merge` 等 Git 操作。
 
-其他关键边界：
+### 其他边界
 
-- **源文件保护**：源 YAML / YML 默认只读；确认修改后也优先在 `generate/yml/` 写入副本。
-- **当前标准核验**：完整可导入 YAML、精确 DSL 字段、当前插件配置、模型结构化输出能力和不确定的 Dify 专属行为，需要基于当前可靠来源核验。
-- **无法联网时**：仍可进行本地结构分析和提供草案，但必须标明“未核验”，不能声称符合当前可导入标准。
-- **敏感信息**：不回显真实密钥、Token、Cookie、授权头、完整签名 URL 或不必要的私有数据。
-- **插件与凭据**：使用占位符；安装插件、配置真实环境或使用真实凭据前必须确认。
-- **Git**：除非用户明确要求，否则不执行 `git add`、`commit`、`push`、`reset`、`checkout`、`rebase`、`merge` 等操作。
-- **绘图**：普通分析不会自动生成图，只有用户明确提出绘图需求时才启用。
-- **Flow 分析**：Scene6 默认只读。它可以指出风险和缺失证据，但这些发现不等于已确认的修改授权或运行时错误，除非用户明确转入修改或 Debug。
-- **参考 Flow**：仓库中的参考或占位 Flow 不代表当前 Dify 官方导入格式，不能未经核验直接当作生产基线。
+- **当前 Dify 行为：**涉及准确 DSL 字段、导入导出结构、插件配置和模型 Structured Output 行为时，应在必要时核验当前资料。
+- **无法在线核验时：**仍可进行本地结构分析和草稿编写，但必须标记为“未核验草稿”，不能声称符合当前导入标准。
+- **场景 6 只读：**Flow 分析发现的问题不等于已批准修改，也不等于已确认的运行错误。
+- **绘图按需启用：**普通分析不会自动生成图表。
+- **参考 Flow 不是标准：**仓库中的示例和占位 Flow 不保证符合当前官方 Dify 导入格式。
+- **优先聊天输出：**简短分析、表格、代码片段和 Debug 结论通常直接在聊天中返回，不为了形式而创建文件。
 
-短分析、小型表格、代码片段和简短 Debug 结论默认直接在聊天中给出，不会为了形式完整而强制创建文件。
-
----
+<a id="limitations"></a>
 
 ## 这个项目不是什么
 
-DifyFlow-Helper 明确不是：
+DifyFlow Helper 不是：
 
-- Dify 官方工具或官方 DSL 标准说明；
-- 自动部署、自动发布或一键上线工具；
-- 无确认地改写用户源 Flow 的脚本；
-- 强制用户填写复杂表单的工作流管理系统；
-- 大型 Dify 示例仓库；
-- 用户业务 Flow、客户数据、生产日志或私有 Prompt 的存储目录；
-- 替代 Dify 平台、模型能力、插件环境和用户业务判断的系统。
+- Dify 官方产品或 Dify DSL 的官方规范；
+- 自动部署、发布或一键上线工具；
+- 无提示改写源 Flow 的脚本；
+- 强制填写表单的工作流管理系统；
+- 生产 Flow、客户数据、私有 Prompt 或运行日志的存储位置；
+- 对 Dify 平台、模型能力、插件环境、测试和人工审核的替代品。
 
-它可以在材料不完整时先帮助梳理问题，但不会把推测当成事实。最终生成的 Flow、代码、Prompt 和图表仍应由用户结合自己的 Dify 环境、模型、插件与业务数据进行检查。
-
----
+Skill 可以整理不完整材料，但不会把假设当作事实。生成的 Flow、代码、Prompt 和图表仍应结合实际 Dify 环境、模型、插件和业务数据进行复核。
 
 ## 贡献
 
-欢迎围绕以下方向改进项目：
+欢迎对以下方向进行贡献：
 
-- 补充或优化 `difyflow-helper/references/` 中的行为规则；
-- 增强 Flow 分析、Debug、节点 IO、LLM Prompt、JSON 输出和绘图场景说明；
-- 改进 `user-kit/templates/` 和 `user-kit/examples/` 的材料示例；
-- 补充脱敏后的参考 Flow 或图形风格参考；
-- 改进只读辅助脚本的健壮性和使用说明。
+- 路由、确认、Debug、YAML 安全、节点 I/O、LLM Prompt 和绘图规则；
+- 更完善的脱敏模板与示例；
+- 安全的参考 Flow 和图表风格参考；
+- 只读辅助脚本的健壮性与文档。
 
-贡献时请遵守这些边界：
-
-- 不提交真实 API Key、Token、Cookie、授权头、签名 URL、生产日志或私有业务数据；
-- 不把用户 case 运行时产物放进 `difyflow-helper/` 或 `user-kit/`；
-- 不把 `user-kit/` 变成另一个 Skill；
-- 不把项目改成强制 workspace 或强制表单系统；
-- 涉及当前 Dify 行为、DSL 字段、插件配置或模型结构化输出能力的说明，应尽量基于当前可靠来源核验。
-
----
+请勿提交真实凭据、生产日志、签名 URL、客户数据、私有业务数据或私有 Prompt。不要把 case 运行产物放进 `difyflow-helper/` 或 `user-kit/`，也不要把 `user-kit/` 改造成第二个 Skill。
 
 ## License
 
-本项目采用 [MIT License](./LICENSE)。
+本项目使用 [MIT License](./LICENSE)。
+
+---
+
+<div align="center">
+
+让 Dify Flow 工作更可控、更透明、更安全。
+
+</div>
