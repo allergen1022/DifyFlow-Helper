@@ -4,7 +4,7 @@
 
 ## 新建或修改 Flow
 
-准备 `new-flow-request.md`、`reference-flow-request.md` 或 `modify-flow-request.md`，并在请求中写明相关文件路径。新建应用时，已知的话注明应用类型；如果类型会影响设计，就先确定类型。
+准备 `new-flow-request.md`、`reference-flow-request.md` 或 `modify-flow-request.md`，并在请求中写明相关文件路径。新建应用时，已知的话注明应用类型；如果类型会影响设计，就先确定类型。若 Flow 需要直接导入，已知的话提供目标 Dify 版本。Agent 会核对最新官方 DSL 资料，并说明已核实的 Dify/DSL 及所需集成版本；导入前请再与目标环境核对。
 
 ## 调试
 
@@ -24,7 +24,7 @@
 
 ## 输出目录
 
-用户请求文件产物时，写入当前 case 的 `generate/` 目录；只有需要输出文件时才创建该目录：
+全新文件写入当前 case 的 `generate/` 目录。修改或 Debug 默认对源文件做最小差异修改；若需保留源文件，请要求在 `generate/` 中生成副本。只有需要输出新文件时才创建该目录：
 
 ```text
 generate/yml/

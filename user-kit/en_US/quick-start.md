@@ -4,7 +4,7 @@ Prepare only the materials you already have. Templates are optional, and raw tex
 
 ## New or Modified Flows
 
-Use `new-flow-request.md`, `reference-flow-request.md`, or `modify-flow-request.md`. State the relevant file paths. For a new app, name its type when known; if the choice affects the design, settle the app type first.
+Use `new-flow-request.md`, `reference-flow-request.md`, or `modify-flow-request.md`. State the relevant file paths. For a new app, name its type when known; if the choice affects the design, settle the app type first. If the Flow must be directly importable, provide the target Dify version when known. The agent checks official current DSL guidance and reports the Dify/DSL and required integration versions it verified; confirm these against the destination environment before import.
 
 ## Debugging
 
@@ -24,7 +24,7 @@ Use `diagram-request.md` and consult `diagram-kit/` for format, method, and styl
 
 ## Output directories
 
-When you request file output, generated files go under the current case's `generate/` directory. It is created only when needed:
+Newly created files go under the current case's `generate/` directory. For requested edits or debug fixes, the source file is changed with a minimal diff by default; ask for a copy in `generate/` when you need to keep the source unchanged. The directory is created only when needed:
 
 ```text
 generate/yml/

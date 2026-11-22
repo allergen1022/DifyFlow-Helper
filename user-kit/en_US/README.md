@@ -14,4 +14,4 @@ Templates do not need to be completed in full. Users may also provide existing f
 
 ## Usage rules
 
-Keep real work in the user's case folder. Create `generate/` there only when file output is requested. Do not put keys, tokens, cookies, authorization headers, signed URLs, private data, or production logs in shared materials.
+Keep real work in the user's case folder. Put newly created artifacts in `generate/`; edit source files directly with a minimal diff for requested changes and debugging. Create a copy in `generate/` only when the user asks to keep the source unchanged. Do not put keys, tokens, cookies, authorization headers, signed URLs, private data, or production logs in shared materials.

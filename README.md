@@ -90,12 +90,14 @@ The skill itself does not require Python. Python is needed only for optional loc
 - **Start with the request and available evidence.** Raw text and partial materials are useful; a rigid intake form is not required.
 - **Read only what the task needs.** The entry skill routes to focused references for design, modification, debugging, analysis, diagrams, and safety.
 - **Use the right source of truth.** Existing Flow configuration and runtime evidence ground the analysis. Current Dify behavior and integration parameters are checked against official documentation when exact details matter.
-- **Keep changes scoped.** Existing Flow files are preserved by default. Requested generated artifacts go under `generate/` in the current workspace; that directory is created when file output is needed, not as part of installation.
+- **Keep changes scoped.** Requested modifications and debug fixes use the source file with a minimal diff. `generate/` is reserved for newly created artifacts, or a modified copy when you ask to preserve the source. It is created only when needed, not during installation.
 - **Keep the response useful.** Chat is the default for analysis, plans, code snippets, and concise findings. Reports, development documents, and diagrams are produced when requested. A clear request is enough to authorize its scoped work; the agent asks only when a missing choice materially changes the result.
 
 ### Tools, plugins, APIs, and MCP
 
 When an external integration is requested and its parameter choices are open, the agent checks whether documented defaults are enough or task-specific parameters are needed. It verifies custom parameters against the provider's official documentation and the target Dify behavior instead of inventing configuration.
+
+For directly importable Flows, it checks the official Dify/DSL version guidance and reports the version basis. When plugins, tools, APIs, or MCP servers are involved, it also reports relevant integration version and compatibility findings; confirm unresolved version details against the destination environment before import or use.
 
 ### Sensitive information
 

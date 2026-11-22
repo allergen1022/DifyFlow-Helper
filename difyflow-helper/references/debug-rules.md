@@ -4,6 +4,8 @@ Scene4 debugging is different from Scene6 Flow analysis. Use Scene4 when the use
 
 Scene6 may identify "requires runtime evidence" without treating a risk as a confirmed failure. If the user wants to investigate it, use Scene4. Apply a source change only when requested.
 
+When a debug fix is requested, make the smallest possible diff directly in the source file, limited to the diagnosed cause. Do not regenerate or reformat unrelated Flow content. If the user asks to keep the source unchanged, place the fixed copy under `generate/`.
+
 Accept `.md`, `.txt`, `.json`, `.log`, `.yml`, `.yaml`, pasted chat text, and Dify UI panel content. Do not require clean JSON or force the user to split node input, output, and errors.
 
 ## Focused Code and Prompt Work

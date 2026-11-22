@@ -18,6 +18,8 @@ For a new app, establish the app type before design when it changes the architec
 
 Debugging takes priority when the request contains an error, failed run, wrong output, parsing failure, or runtime evidence. Diagnose from the available evidence before proposing a source change.
 
+For requested modifications and debug fixes, edit the source file directly with the smallest possible diff. Create a modified copy under `generate/` only when the user asks to preserve the source. Use `generate/` for newly created artifacts.
+
 For focused Code-node or LLM-prompt work, optionally extract relevant content from an exported Flow using `scripts/extract_node_content.py`; treat the result as a working view and verify it against the source Flow. For developer-requested local Code-node debugging, a small harness may exercise the configured JavaScript or Python code, but local execution does not establish Dify runtime behavior.
 
 In Workflow and Chatflow nodes, use LLMs for semantic interpretation and code or native logic for deterministic operations. Before adding an external tool, plugin, API, or MCP integration, resolve whether documented defaults are sufficient or task-specific parameters are needed; verify requested parameters against official documentation.
@@ -31,5 +33,7 @@ Chat is the default for analysis, plans, short prompts, code snippets, and conci
 ## Verification
 
 Local structure analysis normally needs no web lookup. Verify current Dify behavior before exact claims about import/export, DSL fields, node semantics, iteration, plugins, tools, model support, or structured output. Label local observations, inferences, verified facts, and unknowns separately.
+
+For a new Flow intended for direct import, target the supplied Dify version. If it is unknown, use web search to check the latest official Dify release and DSL guidance, state the checked release/DSL version and date, and remind the user to confirm the destination instance version before import. For existing Flows, preserve the source DSL version and structure. When plugins, tools, APIs, or MCP servers are involved, verify and report relevant integration versions and compatibility; "latest" alone does not establish compatibility. Ask for deployment details only when the unknown version blocks an import-ready result.
 
 Scripts are optional read-only helpers. Review their help output before use.

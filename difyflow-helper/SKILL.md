@@ -1,11 +1,11 @@
 ---
 name: difyflow-helper
-description: Use for Dify app design and maintenance, including Workflow, Chatflow, Agent, and other available app types; reference-based development, modification, debugging, read-only analysis, node I/O, prompts, tools, plugins, YAML/DSL review, and diagrams. Analyze first, diagnose failures before fixes, follow the user's requested scope, preserve source files, and verify uncertain current Dify behavior.
+description: Use for Dify app design and maintenance, including Workflow, Chatflow, Agent, and other available app types; reference-based development, modification, debugging, read-only analysis, node I/O, prompts, tools, plugins, YAML/DSL review, and diagrams. Analyze first, diagnose failures before fixes, make minimal scoped edits, and verify uncertain current Dify behavior.
 ---
 
 # difyflow-helper
 
-Use this skill for Dify app work, including Workflow, Chatflow, standalone Agent apps, and other app types supported by the target deployment. Accept raw user material from chat or the current workspace. Do not require templates or role selection. Store generated artifacts under the current workspace's `generate/` directory.
+Use this skill for Dify app work, including Workflow, Chatflow, standalone Agent apps, and other app types supported by the target deployment. Accept raw user material from chat or the current workspace. Do not require templates or role selection. Store newly created artifacts under the current workspace's `generate/` directory.
 
 ## Load references by need
 
@@ -25,9 +25,9 @@ Use this skill for Dify app work, including Workflow, Chatflow, standalone Agent
 ## Core behavior
 
 - Route errors and unstable output to debugging before modification.
-- Treat source YAML/YML as read-only unless the user requests a scoped edit.
+- For requested modifications and debug fixes, edit the source file directly with the smallest possible diff limited to the requested parts. Create a copy under `generate/` only when the user asks to preserve the source.
 - Use node names as primary locators and IDs as secondary locators.
-- Return chat output by default. Write requested generated artifacts under the current workspace's `generate/` directory without asking for a second approval.
+- Return chat output by default. Use `generate/` only for newly created artifacts, not as the default destination for modified existing files.
 - Verify current Dify behavior before complete importable YAML or exact schema claims. Mark unverified drafts clearly.
 - Keep LLM prompts separate into system prompt, user prompt, variables, context, output contract, and downstream parsing expectations when relevant.
 - Apply node-level LLM/Code rules to Workflow and Chatflow canvases. For other app types, use the matching current Dify documentation instead of assuming the same node model.
