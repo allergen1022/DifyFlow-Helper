@@ -1,0 +1,17 @@
+从 Dify 复制的原始材料
+
+flow: invoice-check.yml
+node title: Parse Invoice JSON
+node type: code (javascript)
+
+INPUT:
+model_output => 模型说明后跟带代码围栏的 JSON
+
+OUTPUT:
+
+error_msg: 解析代码围栏中的 JSON 时失败
+process exited with exit status 1
+
+recent change: Prompt 改为要求 Markdown 代码围栏 JSON
+expected: 返回对象 {invoice_data: {...}}
+auth: <REDACTED_TOKEN>

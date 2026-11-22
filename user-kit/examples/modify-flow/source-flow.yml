@@ -1,5 +1,0 @@
-# Source Flow placeholder / 源 Flow 占位文件
-# 中文：此文件不是可导入 Dify 的真实 DSL，只用于演示修改 case 的文件结构。
-# English: This is not importable Dify DSL; it only demonstrates a modification-case file layout.
-# 中文：不要在这里放真实密钥、token、签名 URL 或生产数据。
-# English: Do not place real keys, tokens, signed URLs, or production data here.

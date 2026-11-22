@@ -367,13 +367,11 @@ Skill 可以帮助：
 
 | 需求 | 入口 |
 |---|---|
-| 总体说明 | [`user-kit/README.md`](./user-kit/README.md) |
-| 中文说明 | [`user-kit/README_CN.md`](./user-kit/README_CN.md) |
-| 分场景快速开始 | [`user-kit/quick-start.md`](./user-kit/quick-start.md) |
-| 轻量模板 | [`user-kit/templates/`](./user-kit/templates/) |
-| 已填写的脱敏示例 | [`user-kit/examples/`](./user-kit/examples/) |
-| 公共参考 Flow 指引 | [`user-kit/reference-flows/`](./user-kit/reference-flows/) |
-| 图表风格与实现参考 | [`user-kit/diagram-kit/`](./user-kit/diagram-kit/) |
+| 材料包索引 | [`user-kit/README_CN.md`](./user-kit/README_CN.md) |
+| 英文材料 | [`user-kit/en_US/`](./user-kit/en_US/) |
+| 中文材料 | [`user-kit/zh_CN/`](./user-kit/zh_CN/) |
+| 英文快速开始 | [`user-kit/en_US/quick-start.md`](./user-kit/en_US/quick-start.md) |
+| 中文快速开始 | [`user-kit/zh_CN/quick-start.md`](./user-kit/zh_CN/quick-start.md) |
 
 这些模板只是可选起点，不是必须填写的表单。私有业务 Flow、生产日志、凭据、客户数据和私有 Prompt 应保存在你自己的 case 或 project 中。
 

@@ -370,13 +370,11 @@ Use it when you are unsure what to provide or want reusable, sanitized examples:
 
 | Need | Entry point |
 |---|---|
-| Overview | [`user-kit/README.md`](./user-kit/README.md) |
-| Chinese guide | [`user-kit/README_CN.md`](./user-kit/README_CN.md) |
-| Scenario-based quick start | [`user-kit/quick-start.md`](./user-kit/quick-start.md) |
-| Lightweight templates | [`user-kit/templates/`](./user-kit/templates/) |
-| Filled, sanitized examples | [`user-kit/examples/`](./user-kit/examples/) |
-| Shared reference Flow guidance | [`user-kit/reference-flows/`](./user-kit/reference-flows/) |
-| Diagram styles and implementation references | [`user-kit/diagram-kit/`](./user-kit/diagram-kit/) |
+| User Kit index | [`user-kit/README.md`](./user-kit/README.md) |
+| English materials | [`user-kit/en_US/`](./user-kit/en_US/) |
+| Chinese materials | [`user-kit/zh_CN/`](./user-kit/zh_CN/) |
+| English quick start | [`user-kit/en_US/quick-start.md`](./user-kit/en_US/quick-start.md) |
+| Chinese quick start | [`user-kit/zh_CN/quick-start.md`](./user-kit/zh_CN/quick-start.md) |
 
 Templates are optional starting points, not mandatory forms. Private business Flows, production logs, credentials, customer data, and private prompts should remain in your own case or project folder.
 
