@@ -6,7 +6,7 @@
 
 ## Target
 
-Parse Invoice JSON
+Parse Document Output
 
 ## Change
 

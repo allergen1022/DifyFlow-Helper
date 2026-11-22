@@ -1,14 +1,14 @@
 {
-  "flow": "invoice-check.yml",
-  "failing_node": "Parse Invoice JSON",
+  "flow": "document-parser.yml",
+  "failing_node": "Parse Document Output",
   "node_type": "Code - JavaScript",
   "error_message": "解析代码围栏中的 JSON 失败；exit status 1",
   "input": {
-    "model_output": "包含 invoice_no 的代码围栏 JSON",
+    "model_output": "文本后跟包含 document_type 和 extracted_text 的代码围栏 JSON",
     "file_url": "<REDACTED_SIGNED_URL>"
   },
   "output": {},
-  "expected_output": "返回 invoice_data 对象",
+  "expected_output": "返回 document_data 对象",
   "recent_change": "Prompt 增加了 Markdown 围栏",
   "notes": "仅包含脱敏演示数据"
 }

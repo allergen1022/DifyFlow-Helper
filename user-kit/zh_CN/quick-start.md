@@ -4,11 +4,11 @@
 
 ## 新建或修改 Flow
 
-准备 `new-flow-request.md`、`reference-flow-request.md` 或 `modify-flow-request.md`，并在请求中写明相关文件路径。
+准备 `new-flow-request.md`、`reference-flow-request.md` 或 `modify-flow-request.md`，并在请求中写明相关文件路径。新建应用时，已知的话注明应用类型；如果类型会影响设计，就先确定类型。
 
 ## 调试
 
-准备 `debug-material.md`，或直接提供 `.txt`、`.json`、`.log`、错误信息、节点输入和输出。内容不要求是合法 JSON。
+准备 `debug-material.md`，或直接提供 `.txt`、`.json`、`.log`、错误信息、节点输入和输出。内容不要求是合法 JSON。聚焦某个 Code 节点或 Prompt 时，可以从导出的 Flow 中提取相关内容，但仍需检查源 Flow 的变量绑定。
 
 ## Prompt 处理
 
@@ -24,7 +24,7 @@
 
 ## 输出目录
 
-用户确认后，生成文件写入当前 case 的：
+用户请求文件产物时，写入当前 case 的 `generate/` 目录；只有需要输出文件时才创建该目录：
 
 ```text
 generate/yml/

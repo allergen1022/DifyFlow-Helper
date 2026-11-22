@@ -2,11 +2,11 @@
 
 ## Flow file
 
-invoice-check.yml
+document-parser.yml
 
 ## Failing node
 
-Parse Invoice JSON
+Parse Document Output
 
 ## Node type
 
@@ -18,11 +18,11 @@ SyntaxError while parsing fenced JSON.
 
 ## Input
 
-    model_output = fenced JSON containing invoice_no and total
+    model_output = text followed by fenced JSON containing document_type and extracted_text
 
 ## Expected output
 
-Return an invoice_data object.
+Return a document_data object.
 
 ## Recent change
 

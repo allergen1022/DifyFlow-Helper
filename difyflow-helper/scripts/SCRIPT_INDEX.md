@@ -5,6 +5,7 @@ The skill works without these helpers. Run each with `--help` before use. Script
 - `inspect_dify_yaml.py`: print a read-only high-level Flow summary.
 - `extract_node_index.py`: list node names, ids, and types read-only.
 - `extract_node_io.py`: report likely node input/output configuration read-only.
+- `extract_node_content.py`: print Code node bodies and/or LLM System/User Prompts from recognized exported YAML structures; supports exact node name/id filtering and writes to stdout.
 - `scan_secrets.py`: scan text/YAML/config files and print redacted findings only.
 - `generate_mermaid_from_flow.py`: generate a basic Mermaid graph for a requested diagram. It prints to chat/stdout by default; file output must be under the current workspace's `generate/` folder and never overwrites an existing file.
 

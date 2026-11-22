@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">DifyFlow Helper mark</title>
+  <desc id="desc">A branching flow from one input through a semantic step to two outputs.</desc>
+  <rect x="8" y="8" width="144" height="144" rx="32" fill="#F2F8F6"/>
+  <path d="M42 80h26m0 0 23-28m-23 28 23 28m0-56h27m-27 56h27" fill="none" stroke="#245A50" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
+  <circle cx="36" cy="80" r="13" fill="#168A76"/>
+  <rect x="64" y="66" width="28" height="28" rx="8" fill="#E1B454"/>
+  <circle cx="126" cy="52" r="13" fill="#E98364"/>
+  <circle cx="126" cy="108" r="13" fill="#168A76"/>
+</svg>

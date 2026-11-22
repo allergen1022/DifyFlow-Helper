@@ -1,6 +1,6 @@
 # JSON Output Example
 
     {
-      "risk_level": "low",
-      "reason": "The document contains routine supplier information."
+      "product_category": "<matched category>",
+      "reason": "The description matches the supplied category definition."
     }

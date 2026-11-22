@@ -4,6 +4,8 @@ Leave unknown fields blank. This is a lightweight template.
 
 ## Business goal
 
+## App type (Workflow, Chatflow, standalone Agent, or other)
+
 ## User input
 
 ## Expected output

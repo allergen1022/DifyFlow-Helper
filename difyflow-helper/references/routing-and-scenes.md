@@ -21,6 +21,8 @@ Route according to the main requested outcome:
 
 When requests combine outcomes, serve the user's stated priority and include supporting analysis as needed. Scene names are internal shorthand and need not appear in responses.
 
+Development documentation is a requested deliverable, not a report format. When requested for a new or modified Flow, use the locale-matched style reference in assets/development-document-templates/; adapt its structure to the task and omit irrelevant sections. Do not create this document by default.
+
 ## Scene1: New app
 
 After identifying the app type, use the request and available materials to establish the goal, inputs, outputs, and required behavior. Ask only about gaps that would materially change the design. A clear request for complete importable YAML authorizes that deliverable; verify current Dify behavior before generating it.

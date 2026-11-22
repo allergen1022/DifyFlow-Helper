@@ -7,4 +7,4 @@ Optional references for diagram format, layout, and style.
 - html/ directly viewable HTML diagrams.
 - style-notes/ presentation guidance.
 
-After confirmation, write output under the current case generate/diagrams/.
+When diagram file output is requested, write it under the current case generate/diagrams/.

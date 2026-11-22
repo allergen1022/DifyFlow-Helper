@@ -2,15 +2,19 @@
 
 ## Goal
 
-Classify supplier documents by risk level.
+Build a Dify Workflow that classifies products from their descriptions.
+
+## App type
+
+Workflow
 
 ## Input
 
-Document text and supplier metadata.
+Product name, description, and an available category list.
 
 ## Output
 
-Risk level, reason, and review flag.
+Selected product category and a short reason.
 
 ## Desired output
 

@@ -1,7 +1,7 @@
 RAW COPY FROM DIFY
 
-flow: invoice-check.yml
-node title: Parse Invoice JSON
+flow: document-parser.yml
+node title: Parse Document Output
 node type: code (javascript)
 
 INPUT:
@@ -13,5 +13,5 @@ error_msg: SyntaxError while parsing fenced JSON
 process exited with exit status 1
 
 recent change: prompt now asks for Markdown fenced JSON
-expected: return object {invoice_data: {...}}
+expected: return object {document_data: {...}}
 auth: <REDACTED_TOKEN>

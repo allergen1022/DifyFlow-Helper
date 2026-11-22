@@ -2,11 +2,11 @@
 
 ## Flow 文件
 
-invoice-check.yml
+document-parser.yml
 
 ## 报错节点
 
-Parse Invoice JSON
+Parse Document Output
 
 ## 节点类型
 
@@ -22,7 +22,7 @@ Parse Invoice JSON
 
 ## 期望输出
 
-返回 invoice_data 对象。
+返回 document_data 对象。
 
 ## 最近改动
 

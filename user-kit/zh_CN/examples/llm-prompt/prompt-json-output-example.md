@@ -1,6 +1,6 @@
 # JSON 输出示例
 
     {
-      "risk_level": "low",
-      "reason": "文档只包含常规供应商信息。"
+      "product_category": "<匹配的类别>",
+      "reason": "商品描述符合提供的类别定义。"
     }

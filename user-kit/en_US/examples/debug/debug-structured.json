@@ -1,14 +1,14 @@
 {
-  "flow": "invoice-check.yml",
-  "failing_node": "Parse Invoice JSON",
+  "flow": "document-parser.yml",
+  "failing_node": "Parse Document Output",
   "node_type": "Code - JavaScript",
   "error_message": "SyntaxError while parsing fenced JSON; exit status 1",
   "input": {
-    "model_output": "fenced JSON with invoice_no",
+    "model_output": "text followed by fenced JSON with document_type and extracted_text",
     "file_url": "<REDACTED_SIGNED_URL>"
   },
   "output": {},
-  "expected_output": "Return invoice_data object",
+  "expected_output": "Return document_data object",
   "recent_change": "Prompt added Markdown fences",
   "notes": "Sanitized demonstration data only"
 }

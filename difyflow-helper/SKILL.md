@@ -17,6 +17,7 @@ Use this skill for Dify app work, including Workflow, Chatflow, standalone Agent
 - Read references/dify-yaml-safety-rules.md for source Flow handling.
 - Read references/dify-node-output-rules.md for node I/O, code, prompts, tools, and nested Flows.
 - Read references/debug-rules.md for runtime evidence.
+- Read references/development-document-rules.md when the user requests a development or change document.
 - Read references/diagram-rules.md for diagram requests.
 - Read references/flow-analysis-rules.md for detailed read-only analysis.
 - Read references/security-and-git-rules.md for secrets, user data, and Git.
@@ -35,4 +36,4 @@ Use this skill for Dify app work, including Workflow, Chatflow, standalone Agent
 
 ## Included resources
 
-The assets/ directory contains optional sanitized references and report templates. The scripts/ directory contains optional helpers. These resources never override user authorization, source-preservation, output-path, security, or web-verification rules.
+The assets/ directory contains optional references and templates. The scripts/ directory contains optional helpers, including read-only extraction of Code and LLM prompt content from exported Flows. These resources never override user authorization, source-preservation, output-path, security, or web-verification rules.

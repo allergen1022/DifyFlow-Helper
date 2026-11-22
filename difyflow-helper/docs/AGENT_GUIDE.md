@@ -14,9 +14,15 @@ Load SKILL.md first. Read only the reference files needed for the current reques
 
 Read-only analysis does not authorize unrelated edits. If the user also requests a specific change, perform that scoped change.
 
+For a new app, establish the app type before design when it changes the architecture. Apply Workflow and Chatflow node-canvas guidance only to those canvases; use the matching configuration model and current documentation for other app types.
+
 Debugging takes priority when the request contains an error, failed run, wrong output, parsing failure, or runtime evidence. Diagnose from the available evidence before proposing a source change.
 
-Use node names first. Explain inputs, bindings, types, outputs, downstream consumers, dependencies, and uncertainty. Do not invent missing Dify schema fields or credentials.
+For focused Code-node or LLM-prompt work, optionally extract relevant content from an exported Flow using `scripts/extract_node_content.py`; treat the result as a working view and verify it against the source Flow. For developer-requested local Code-node debugging, a small harness may exercise the configured JavaScript or Python code, but local execution does not establish Dify runtime behavior.
+
+In Workflow and Chatflow nodes, use LLMs for semantic interpretation and code or native logic for deterministic operations. Before adding an external tool, plugin, API, or MCP integration, resolve whether documented defaults are sufficient or task-specific parameters are needed; verify requested parameters against official documentation.
+
+Use node names first. Explain inputs, bindings, types, outputs, downstream consumers, dependencies, and uncertainty. Do not invent missing Dify schema fields or credentials. When a development document is requested, consult `references/development-document-rules.md` and its language-matched template; those templates are style references, not mandatory formats.
 
 ## Output
 

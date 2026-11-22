@@ -4,6 +4,8 @@
 
 ## 业务目标
 
+## 应用类型（Workflow、Chatflow、独立 Agent 或其他）
+
 ## 用户输入
 
 ## 期望输出

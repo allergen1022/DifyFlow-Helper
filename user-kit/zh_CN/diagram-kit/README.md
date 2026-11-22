@@ -7,4 +7,4 @@
 - html/ 可直接打开的 HTML 图。
 - style-notes/ 展示场景的样式说明。
 
-用户确认后，生成文件写入当前 case 的 generate/diagrams/。
+用户请求图表文件时，写入当前 case 的 generate/diagrams/。

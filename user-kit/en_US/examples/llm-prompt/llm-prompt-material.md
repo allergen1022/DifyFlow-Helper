@@ -2,16 +2,17 @@
 
 ## Node
 
-Classify Supplier Document
+Classify Product Description
 
 ## Variables
 
 - query: user request
-- document_text: extracted document content
+- product_description: product text to classify
+- category_list: available product categories
 
 ## Expected output
 
-Return JSON with risk_level and reason.
+Return JSON with product_category and reason.
 
 ## Action
 
