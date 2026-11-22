@@ -1,8 +1,8 @@
 # File Output Rules
 
-Use chat for short analysis, plans, small tables, code snippets, prompts, and concise debug summaries.
+Use chat for analysis, plans, small tables, code snippets, prompts, and concise debug summaries unless the user requests a file.
 
-After a user request or confirmation, write artifacts only under the current case:
+Store every generated artifact under the current workspace's `generate/` directory:
 
     generate/yml/
     generate/reports/
@@ -14,12 +14,12 @@ After a user request or confirmation, write artifacts only under the current cas
     generate/diagrams/images/
     generate/code/
 
-Use stable names based on the case and node names. State the exact relative path after writing. Do not overwrite an existing file without separate confirmation.
+Use a clear subdirectory based on artifact type and a descriptive filename. Resolve generated paths within the current workspace's `generate/` directory; do not write generated artifacts outside it. State the exact relative path after writing.
 
-Use generate/yml/ for modified Flow copies or complete YAML.
-Use generate/reports/ for requested analysis or debug reports.
-Use generate/prompts/ for confirmed prompt artifacts and prompt change plans.
-Use generate/diagrams/<format>/ for diagrams.
-Use generate/code/ for explicitly requested standalone code.
+Use `generate/yml/` for modified Flow copies or complete YAML.
+Use `generate/reports/` for requested reports.
+Use `generate/prompts/` for requested prompt artifacts and prompt change plans.
+Use `generate/diagrams/<format>/` for diagrams.
+Use `generate/code/` for requested standalone code.
 
-Never write generated files into the installed skill or any reference package. Do not include secrets or raw private data in artifacts.
+Do not overwrite an existing file unless the user explicitly requested it. If the destination exists, choose a distinct name when practical; ask once only when no clear safe path remains. Never write generated files into the installed skill or a reference package. Do not include secrets or unnecessary private data in artifacts.

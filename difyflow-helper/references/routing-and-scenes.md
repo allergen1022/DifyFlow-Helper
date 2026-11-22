@@ -1,40 +1,46 @@
 # Routing and Scenes
 
-Infer the primary scene from the request. Do not require the user to name a scene.
+Infer the user's primary goal from the request and supplied materials. Do not require scene names, templates, or a fixed intake form. Ask only for missing information that materially changes the design or deliverable.
 
-## Priority
+## Determine the app type
 
-1. Errors, failed runs, wrong output, parsing failures, tool failures, import failures, or runtime evidence route to Scene4.
-2. An explicit diagram request routes to Scene5.
-3. Modification of an existing Flow routes to Scene3.
-4. New development based on an existing Flow or reusable logic routes to Scene2.
-5. New development without a reference routes to Scene1.
-6. Read-only explanation, review, comparison, tracing, or documentation routes to Scene6.
+For a new app, use the type the user chose. If no type is stated and the choice changes the design, ask which type they need before designing. Examples include Workflow, Chatflow, a standalone Agent app, Chatbot, and Text Generator; availability and behavior vary by Dify version. Clarify “Agent” only when it is unclear whether the user means a standalone app, an Agent node, or another agentic design.
 
-LLM prompt work is node-level work within the applicable scene. Use Scene6 for prompt analysis only, Scene4 for prompt-related failures, and Scene3 for prompt changes in an existing Flow.
+For an existing app, identify its type from the request or artifact. Ask only if it cannot be established and it affects the work. Apply Workflow and Chatflow node-canvas guidance to those canvases; for other app types, check the relevant configuration surface and current documentation.
 
-## Scene1: New Flow
+## Choose a scene
 
-Clarify or infer the business goal, inputs, outputs, node responsibilities, risks, and next deliverable. Confirm before complete importable YAML and verify current Dify behavior.
+Route according to the main requested outcome:
+
+- Diagnose a reported failure before proposing a fix.
+- Generate a diagram when requested.
+- Modify an existing app or Flow when requested.
+- Use an existing Flow as a development reference when requested.
+- Build a new app when requested.
+- Otherwise, provide read-only analysis, explanation, comparison, tracing, or documentation.
+
+When requests combine outcomes, serve the user's stated priority and include supporting analysis as needed. Scene names are internal shorthand and need not appear in responses.
+
+## Scene1: New app
+
+After identifying the app type, use the request and available materials to establish the goal, inputs, outputs, and required behavior. Ask only about gaps that would materially change the design. A clear request for complete importable YAML authorizes that deliverable; verify current Dify behavior before generating it.
 
 ## Scene2: Reference-based development
 
-Read the referenced Flow from the current case. Explain reusable structure, business-specific parts, required changes, missing dependencies, and old-to-new mapping. Confirm the desired deliverable before complete YAML.
+Read the referenced Flow from the current workspace. Reuse only structures that fit the requested goal, identify business-specific logic and missing dependencies, and proceed with the requested deliverable. Ask about the deliverable only when it is genuinely unclear.
 
-## Scene3: Modify an existing Flow
+## Scene3: Modify an existing app or Flow
 
-Locate the target node, trace upstream inputs and downstream consumers, and provide a modification plan before editing or generating a modified copy.
+Trace the relevant inputs, outputs, and dependencies, then make the requested scoped change. Preserve unrelated source content. Give a concise change summary; pause for clarification only when the target or behavior is materially ambiguous.
 
-## Scene4: Debug first
+## Scene4: Debug
 
-Identify the failing Flow or node, error, actual input and output, expected output, and recent change. Diagnose from evidence, state uncertainty, and confirm before a debug-driven source change.
+Use runtime evidence to diagnose the reported failure and distinguish evidence from inference. Apply a source change when the user requested a fix; for diagnosis-only requests, report the findings and suggested fix without modifying the source.
 
-## Scene5: Explicit diagram generation
+## Scene5: Diagrams
 
-Use only when the user explicitly asks for a diagram or diagram format. Determine the use, detail level, source, method, and output format before generating files.
+Generate a diagram only when requested. Infer its audience, detail, format, and source from context where possible. Ask only about a missing choice that would materially change the result.
 
-## Scene6: Flow analysis
+## Scene6: Read-only analysis
 
-Analyze one or more existing Flows without modification. Use global, focused, or multi-Flow analysis. Return chat output by default. Write a report only after request or confirmation.
-
-When intents are combined, use the highest-priority scene and treat analysis as a supporting phase.
+Analyze existing Flows without modification unless the user also asks for a change. Return the analysis in chat by default; create a report only when requested. Use a report template as an optional starting point and adapt it to the request.

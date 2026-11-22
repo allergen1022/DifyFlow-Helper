@@ -44,4 +44,4 @@
 
 ## 14. Conclusions
 
-## 15. Optional Next Actions Requiring Confirmation
+## 15. Optional Next Actions

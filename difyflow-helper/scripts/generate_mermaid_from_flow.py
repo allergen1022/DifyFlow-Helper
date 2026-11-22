@@ -60,19 +60,21 @@ def build(graph: dict, direction: str) -> str:
 
 
 def is_under_generate(path: Path) -> bool:
-    return "generate" in {part.lower() for part in path.resolve().parts}
+    output_path = path.resolve()
+    generate_root = (Path.cwd() / "generate").resolve()
+    return output_path.is_relative_to(generate_root)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Generate Mermaid only after the user requests or confirms diagram output."
+        description="Generate a Mermaid graph from Dify YAML."
     )
     parser.add_argument("yaml_file", type=Path)
     parser.add_argument("--direction", choices=["TD", "TB", "BT", "LR", "RL"], default="TD")
     parser.add_argument(
         "--output",
         type=Path,
-        help="Optional new .mmd path under the current case generate/ folder; never overwrites",
+        help="Optional new .mmd path under the current workspace generate/ folder; never overwrites",
     )
     args = parser.parse_args()
     content = build(load_graph(args.yaml_file), args.direction)
@@ -80,7 +82,7 @@ def main() -> int:
         if args.output.suffix.lower() != ".mmd":
             raise SystemExit("Output must use the .mmd extension")
         if not is_under_generate(args.output):
-            raise SystemExit("Output must be under the current case generate/ folder")
+            raise SystemExit("Output must be under the current workspace generate/ folder")
         if args.output.exists():
             raise SystemExit(f"Refusing to overwrite existing file: {args.output}")
         args.output.parent.mkdir(parents=True, exist_ok=True)

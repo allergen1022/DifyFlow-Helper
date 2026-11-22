@@ -84,7 +84,7 @@ Use multi-Flow analysis when several related Flows are provided.
 
 Identify each Flow by path or user label. Determine the primary Flow when possible. Analyze each Flow independently, then explain caller/callee, tool, nested-Flow, handoff, shared schema, shared variable, or output-contract relationships where evidence exists.
 
-Separate confirmed relationships from inferred relationships. If a related Flow is missing, say so and do not invent its content or output contract. Ask one targeted question only when the relationship cannot be determined and the uncertainty materially changes the analysis.
+Separate confirmed relationships from inferred relationships. If a related Flow is missing, say so and do not invent its content or output contract. Ask one targeted question only when the relationship cannot be determined and the uncertainty materially changes the requested result.
 
 ## Overall structure analysis
 
@@ -252,27 +252,15 @@ Recommended sections:
 
 Use only the headings that improve clarity.
 
-## Report confirmation behavior
+## Report output
 
-After chat analysis, ask:
-
-```text
-Would you like me to write this as a Markdown analysis report under generate/reports/?
-```
-
-Do not ask if the user requested chat-only output or already requested a report file.
-
-An explicit initial request such as "Analyze this Flow and write a Markdown analysis report" counts as confirmation for creating a new report under the standard safe output path, unless the destination is ambiguous, the file would overwrite an existing file, the user asks for a path outside the current case or project, or sensitive content requires additional scope clarification.
-
-## Report output path and naming
-
-Write confirmed reports only under the current case:
+Create a report only when requested. Do not offer to create one after every chat analysis. There is no required report format; use an optional template as a starting point and adapt it to the task. Store requested reports under the current workspace:
 
 ```text
 generate/reports/
 ```
 
-Use lowercase kebab-case where practical:
+Choose a descriptive filename that fits the workspace:
 
 ```text
 generate/reports/<flow-name>-analysis-report.md
@@ -280,7 +268,7 @@ generate/reports/<flow-name>-<focus>-analysis-report.md
 generate/reports/<case-name>-multi-flow-analysis-report.md
 ```
 
-Create missing directories only after confirmation. Do not overwrite existing reports without explicit confirmation. Always state the exact relative path.
+Create missing directories as needed. Preserve an existing report unless the user explicitly requested an overwrite; when the destination already exists, use a distinct name if practical. State the exact relative path after writing.
 
 ## Scene handoffs
 
@@ -289,7 +277,7 @@ Create missing directories only after confirmation. Do not overwrite existing re
 - Scene6 to Scene5: user asks for Mermaid, JavaScript, SVG, HTML, image, or diagram output.
 - Scene6 to Scene2: user asks to use the analyzed Flow as reference for a new Flow.
 
-Do not perform the next scene's side effects without its normal confirmation requirements.
+Follow the user's stated scope when moving between scenes. Do not perform a new, unrequested side effect.
 
 ## Web verification boundary
 

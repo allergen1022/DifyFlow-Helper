@@ -39,12 +39,31 @@ For focused analysis, use compact tables such as:
 
 ## Code nodes
 
-Provide complete replacement code by default for actual design or modification tasks. Keep the original language when modifying. For Scene6 analysis, review the existing code, expected inputs, return values, dependencies, downstream use, and risks without replacing it. For new development, ask Python versus JavaScript only when the choice matters; when asked to proceed quickly, choose the simpler safe option and state conversion is possible. List expected inputs and returned outputs, add null/type guards, show important object/array shapes, list third-party packages, and use placeholders instead of secrets.
+Use Code nodes for deterministic operations such as exact calculations, fixed mappings, validation, and data shaping. Prefer native Dify logic nodes when they express the required operation clearly. Do not use an LLM to generate exact identifiers, indexes, codes, or other fixed values.
+
+Choose a Code node language based on the user's requirements, existing code, dependencies, and target Dify runtime. If none of these constrain the choice, JavaScript is a reasonable default. Keep inputs limited to required variables and outputs limited to values used downstream. Add guards only when required by the input contract or actual runtime uncertainty. Use placeholders instead of secrets.
+
+Provide complete replacement code by default for actual design or modification tasks. Keep the original language when modifying. For Scene6 analysis, review existing code, expected inputs, return values, dependencies, downstream use, and risks without replacing it. Show important object/array shapes and list third-party packages when relevant.
+
+## LLM and deterministic logic boundary
+
+These rules apply to LLM and Code nodes in Workflow and Chatflow canvases:
+
+- Use LLM nodes for semantic understanding, such as interpreting free text, resolving intent, classifying by meaning, or generating natural-language content.
+- Use Code or native logic nodes for deterministic processing, including exact calculations, fixed mappings, validation, identifiers, indexes, and formatting.
+- When a task needs both, keep semantic judgment in the LLM step and exact processing in Code or native logic nodes.
+- Send only the context and variables needed for the LLM task; avoid repeated or oversized context.
+
+## Control flow and errors
+
+- Let error behavior follow the business requirement. Add an exception branch only when it provides a defined recovery or user-visible result.
+- When multiple error messages must be returned together, consider a Variable Aggregator if supported by the target Dify version.
+- Preserve existing error behavior when modifying Iteration or Loop nodes. For new designs, choose error and continuation behavior from the business requirement; clarify only if the choice materially affects expected results.
 
 ## LLM Node Prompt and Structured Output Rules
 Note that LLM prompt handling is a cross-cutting node-level capability, not a standalone Scene. Apply these rules whenever an LLM node prompt is designed, reused, modified, debugged, or exported.
 
-Separate system and user prompts, explain what belongs in each, and list variables used by each prompt. Explain where each variable binds in the Dify UI. Ask full replacement versus changed sections only when it materially changes the deliverable. Default to chat; use the current case `generate/prompts/` folder only for user-requested or confirmed prompt artifacts.
+Separate system and user prompts when the Dify configuration supports them. Explain relevant variables and bindings. Infer whether a full replacement or targeted change is wanted from the request; ask only if that choice materially changes an unclear deliverable. Default to chat; write requested prompt artifacts under `generate/prompts/`.
 
 For Scene6, analyze prompt structure, bindings, context, JSON requirements, downstream parsing, conflicts, missing variables, and output stability risks without rewriting the prompt.
 
@@ -58,16 +77,20 @@ Identify whether context is needed, its upstream producer, and whether it is pas
 | Context Item | Source Node | Source Variable / Output | Data Type | Used In | Notes |
 |---|---|---|---|---|---|
 
-When JSON output is required or consumed downstream, confirm whether strict JSON is needed, the exact fields and types, the downstream consumer, and whether the user's Dify version and selected model support structured output or JSON Schema. Do not assume support. Verify current support before final configuration, or ask the user for environment details.
+When JSON output is required or consumed downstream, derive the contract from the request and available downstream configuration. Ask only for missing fields, types, or strictness that materially affect the result. Verify current Dify and model support before configuring structured output or JSON Schema; do not assume support.
 
 | Output Field | Type | Required | Description | Downstream Consumer |
 |---|---|---:|---|---|
 
-If JSON Schema support is unavailable or uncertain, put the JSON contract in the prompt and mark native schema configuration as optional and unverified. Instruct the model to output JSON only, without Markdown fences or text outside JSON; include every required field; use `null` for unknown optional values when appropriate; obey the exact schema and user-specified string limits. Warn that prompt-only JSON can fail, and require downstream validation, retry, or error handling where appropriate.
+If JSON Schema support is unavailable or uncertain, describe the JSON contract in the prompt and label native schema configuration as optional and unverified. Match the requested output shape. Where reliability matters, explain that prompt-only formatting can fail and use downstream validation or error handling appropriate to the task.
 
 ## Plugins, auth, and keys
 
-Disclose required plugins or APIs and ask before installation/configuration. Never echo real keys, tokens, cookies, authorization headers, signed URLs, or private bucket URLs.
+Before configuring an external tool, plugin, API integration, or MCP server, ask once whether to use documented defaults or add task-specific parameters when the user has not specified. Reuse the answer for that integration throughout the task. Clarify only missing purpose or behavior for requested custom parameters.
+
+Verify parameter names, types, requiredness, and behavior against the integration's official documentation and the target Dify version. Configure only parameters supported by those sources and needed for the user's stated goal. If documentation is unavailable or the requirement is unclear, ask for the relevant specification or clarify; never invent fields or values.
+
+Identify required plugins or APIs. A clear user request authorizes the requested installation or configuration; do not ask for a second approval. Never echo real keys, tokens, cookies, authorization headers, signed URLs, or private bucket URLs.
 
 ## Nested Flows
 

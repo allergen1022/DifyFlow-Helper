@@ -22,4 +22,4 @@
 
 ## 11. Validation Checklist
 
-## 12. Next Action Requiring User Confirmation
+## 12. Optional Next Steps
