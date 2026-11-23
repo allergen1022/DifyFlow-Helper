@@ -81,6 +81,12 @@ DifyFlow Helper 为 Agent 提供一套聚焦的 Dify 应用工作方式。你可
 
 作为 Agent Skill 安装时，**只安装 [`difyflow-helper/`](./difyflow-helper/)**。这个目录才是真正的 Skill，包含 `SKILL.md` 及其使用的参考规则、资源、脚本和指引。从本仓库安装时，将该目录选为 Skill 根目录；不要把仓库根目录或 `user-kit/` 当作 Skill 安装。
 
+本 Skill 使用通用 `SKILL.md` 格式，可通过以下工具各自的技能加载方式使用：
+
+- **编码智能体：** Codex、Claude Code、OpenCode、ZCode 等支持 Agent Skills 格式的工具。
+- **智能体运行框架（Harness）：** Pi（提供编码智能体命令行工具）、DeepSeek Harness（需启用本地技能文件系统插件）等支持 Agent Skills 格式的框架或运行时。
+- **个人与办公助手：** Hermes Agent、OpenClaw、WorkBuddy（手动上传）等支持 Agent Skills 格式的助手。
+
 安装完成后，所选 Skill 根目录下应直接看到 `SKILL.md`。从仓库或本地目录添加 Skill 的具体步骤，请遵循所用 Agent 当前的官方说明；包边界见[安装说明](./difyflow-helper/docs/INSTALL.md)。
 
 Skill 本身不依赖 Python。只有在本地运行可选辅助脚本时才需要 Python；读取 YAML 的脚本可能还需要 `PyYAML`。

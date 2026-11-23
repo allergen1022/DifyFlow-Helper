@@ -81,6 +81,12 @@ input/output contracts, and any missing information. Do not modify them.
 
 Install **only [`difyflow-helper/`](./difyflow-helper/)** as the Agent Skill. That directory is the skill: it contains `SKILL.md` and the references, assets, scripts, and guidance used by it. When installing from this repository, select that directory as the skill root; do not install the repository root or `user-kit/` as a skill.
 
+The skill uses the shared `SKILL.md` format and is compatible through each tool's skill loader:
+
+- **Coding agents:** Codex, Claude Code, OpenCode, ZCode, and other coding agents that support the Agent Skills format.
+- **Agent harnesses / runtimes:** Pi (includes a coding-agent CLI), DeepSeek Harness (enable its local skill provider), and other harnesses/runtimes that support the Agent Skills format.
+- **Personal and workplace assistants:** Hermes Agent, OpenClaw, WorkBuddy (manual upload), and other assistants that support the Agent Skills format.
+
 After installation, `SKILL.md` should be directly inside the selected skill root. Use your agent's current official instructions for adding a skill from a repository or local directory. See [the installation notes](./difyflow-helper/docs/INSTALL.md) for the package boundary.
 
 The skill itself does not require Python. Python is needed only for optional local helper scripts; scripts that read YAML may require `PyYAML`.

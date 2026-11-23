@@ -1,6 +1,6 @@
 ---
 name: difyflow-helper
-description: Use for Dify app design and maintenance, including Workflow, Chatflow, Agent, and other available app types; reference-based development, modification, debugging, read-only analysis, node I/O, prompts, tools, plugins, YAML/DSL review, and diagrams. Analyze first, diagnose failures before fixes, make minimal scoped edits, and verify uncertain current Dify behavior.
+description: Build, analyze, debug, and modify Dify apps and Flows, including Workflow, Chatflow, Agent, integrations, DSL/YAML, and diagrams.
 ---
 
 # difyflow-helper
@@ -8,6 +8,8 @@ description: Use for Dify app design and maintenance, including Workflow, Chatfl
 Use this skill for Dify app work, including Workflow, Chatflow, standalone Agent apps, and other app types supported by the target deployment. Accept raw user material from chat or the current workspace. Do not require templates or role selection. Store newly created artifacts under the current workspace's `generate/` directory.
 
 ## Load references by need
+
+Resolve all resource paths relative to this skill directory. In OpenClaw, prefix a resource path with `{baseDir}/` when accessing it.
 
 - Route the request with references/routing-and-scenes.md.
 - Determine the target app type before designing or building a new app. For existing apps, identify the type from the request or source artifact; ask if it is unclear. Distinguish a standalone Agent app from an Agent node inside a Workflow or Chatflow.
