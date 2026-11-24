@@ -1,10 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="416 416 1216 1216" role="img" aria-labelledby="title desc">
   <title id="title">DifyFlow Helper mark</title>
-  <desc id="desc">A branching flow from one input through a semantic step to two outputs.</desc>
-  <rect x="8" y="8" width="144" height="144" rx="32" fill="#F2F8F6"/>
-  <path d="M42 80h26m0 0 23-28m-23 28 23 28m0-56h27m-27 56h27" fill="none" stroke="#245A50" stroke-linecap="round" stroke-linejoin="round" stroke-width="8"/>
-  <circle cx="36" cy="80" r="13" fill="#168A76"/>
-  <rect x="64" y="66" width="28" height="28" rx="8" fill="#E1B454"/>
-  <circle cx="126" cy="52" r="13" fill="#E98364"/>
-  <circle cx="126" cy="108" r="13" fill="#168A76"/>
+  <desc id="desc">A blue D with two workflow nodes and a violet spark.</desc>
+  <defs>
+    <linearGradient id="flow" x1="0%" y1="30%" x2="100%" y2="55%">
+      <stop offset="0" stop-color="#1459EA"/>
+      <stop offset=".35" stop-color="#1767EE"/>
+      <stop offset="1" stop-color="#50CFEA"/>
+    </linearGradient>
+    <linearGradient id="spark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0" stop-color="#8184FB"/>
+      <stop offset="1" stop-color="#5759DD"/>
+    </linearGradient>
+    <mask id="node-holes" maskUnits="userSpaceOnUse" x="416" y="416" width="1216" height="1216">
+      <path d="M416 416h1216v1216H416z" fill="#fff"/>
+      <circle cx="1024" cy="616" r="70"/>
+      <circle cx="1024" cy="1432" r="70"/>
+    </mask>
+  </defs>
+  <g mask="url(#node-holes)">
+    <path fill="url(#flow)" fill-rule="evenodd" d="M750 513h274a511 511 0 0 1 0 1022H720c-114 0-206-92-206-206V749c0-130 106-236 236-236Zm0 205h274a306 306 0 0 1 0 612H750a32 32 0 0 1-32-32V750a32 32 0 0 1 32-32Z"/>
+    <circle cx="1024" cy="616" r="146" fill="#1158DB"/>
+    <circle cx="1024" cy="1432" r="146" fill="#1158DB"/>
+  </g>
+  <path fill="url(#spark)" d="M1024 830q28 96 55 139 43 27 139 55-96 28-139 55-27 43-55 139-28-96-55-139-43-27-139-55 96-28 139-55 27-43 55-139Z"/>
 </svg>
