@@ -1,10 +1,8 @@
 <div align="center">
 
-[简体中文](./README_CN.md) · **English**
+# DifyFlow Helper
 
 <img src="./assets/logo-robot-2-redraw.svg" width="196" height="196" alt="DifyFlow Helper flow mark">
-
-# DifyFlow Helper
 
 **A practical Agent Skill for building, understanding, debugging, and changing Dify apps.**
 
@@ -15,6 +13,8 @@ From a rough requirement or an existing Flow to a clear design, a grounded diagn
   <img src="https://img.shields.io/badge/Apps-Workflow_%7C_Chatflow_%7C_Agent-245A50?style=flat-square" alt="Workflow, Chatflow, and Agent apps">
   <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-E1B454?style=flat-square" alt="MIT License"></a>
 </p>
+
+[简体中文](./README_CN.md) · **English**
 
 [What it does](#what-it-does) · [Quick start](#quick-start) · [Install](#install) · [How it works](#how-it-works) · [Resources](#resources)
 

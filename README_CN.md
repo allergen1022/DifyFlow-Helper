@@ -1,10 +1,8 @@
 <div align="center">
 
-**简体中文** · [English](./README.md)
+# DifyFlow Helper
 
 <img src="./assets/logo-robot-2-redraw.svg" width="196" height="196" alt="DifyFlow Helper 流程标记">
-
-# DifyFlow Helper
 
 **面向 Dify 应用构建、理解、调试与修改的实用 Agent Skill。**
 
@@ -15,6 +13,8 @@
   <img src="https://img.shields.io/badge/Apps-Workflow_%7C_Chatflow_%7C_Agent-245A50?style=flat-square" alt="Workflow、Chatflow 与 Agent 应用">
   <a href="./LICENSE"><img src="https://img.shields.io/badge/License-MIT-E1B454?style=flat-square" alt="MIT License"></a>
 </p>
+
+**简体中文** · [English](./README.md)
 
 [能做什么](#能做什么) · [快速开始](#快速开始) · [安装](#安装) · [工作方式](#工作方式) · [附加资源](#附加资源)
 
