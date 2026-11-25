@@ -2,7 +2,7 @@
 
 **简体中文** · [English](./README.md)
 
-<img src="./assets/logo-robot-2-redraw.svg" width="176" height="176" alt="DifyFlow Helper 流程标记">
+<img src="./assets/logo-robot-2-redraw.svg" width="196" height="196" alt="DifyFlow Helper 流程标记">
 
 # DifyFlow Helper
 
